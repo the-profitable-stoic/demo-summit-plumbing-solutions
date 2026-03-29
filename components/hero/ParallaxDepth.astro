@@ -1,0 +1,274 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { business, content, images } = siteConfig;
+const { homepage, companyInfo } = content;
+const heroImage = images.hero;
+
+const badges = [
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    label: 'Licensed & Insured',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    label: '24/7 Available',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    label: '5-Star Rated',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    label: `${business.city}, ${business.state}`,
+  },
+];
+---
+
+<section class="parallax-depth-hero" aria-label="Hero">
+  {/* Parallax background layer */}
+  <div class="pdh__bg" style={`background-image: url('${heroImage}');`} role="img" aria-label={`${business.category} hero image`}></div>
+
+  {/* Gradient overlays for depth */}
+  <div class="pdh__overlay pdh__overlay--gradient" aria-hidden="true"></div>
+  <div class="pdh__overlay pdh__overlay--bottom" aria-hidden="true"></div>
+
+  {/* Content pinned to bottom */}
+  <div class="container pdh__container">
+    <div class="pdh__content">
+      {/* Small label */}
+      <span class="pdh__label animate-fade-in">
+        {business.category} &bull; {business.city}, {business.state}
+      </span>
+
+      {/* Headline */}
+      <h1 class="pdh__headline animate-fade-up">{homepage.heroHeadline}</h1>
+
+      {/* Subline */}
+      <p class="pdh__subline animate-fade-up">{homepage.heroSubline}</p>
+
+      {/* Icon-stat badges row */}
+      <div class="pdh__badges animate-fade-up">
+        {badges.map(badge => (
+          <div class="pdh__badge">
+            <span class="pdh__badge-icon" set:html={badge.icon} />
+            <span class="pdh__badge-label">{badge.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA buttons */}
+      <div class="pdh__actions animate-fade-up">
+        <a href="/contact" class="btn-primary">Get Free Estimate</a>
+        <a href={`tel:${business.phone}`} class="btn-secondary pdh__phone-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          {business.phone}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .parallax-depth-hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  /* Parallax background */
+  .pdh__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transform: scale(1.05);
+  }
+
+  /* Gradient overlays */
+  .pdh__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .pdh__overlay--gradient {
+    background: linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+  }
+
+  .pdh__overlay--bottom {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.4) 35%,
+      transparent 65%
+    );
+  }
+
+  /* Container */
+  .pdh__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: 8rem;
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .pdh__content {
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Label */
+  .pdh__label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-primary);
+  }
+
+  /* Headline */
+  .pdh__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2.25rem, 7vw, 4.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+    margin: 0;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Subline */
+  .pdh__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.8vw, 1.1875rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  /* Badges */
+  .pdh__badges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .pdh__badge {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.25s ease;
+  }
+
+  .pdh__badge:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .pdh__badge-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+  }
+
+  .pdh__badge-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+
+  /* Actions */
+  .pdh__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .pdh__phone-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+  }
+
+  .pdh__phone-btn:hover {
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Mobile: disable parallax, 2x2 grid for badges */
+  @media (max-width: 767px) {
+    .pdh__bg {
+      background-attachment: scroll;
+      transform: none;
+    }
+  }
+
+  /* Tablet+ */
+  @media (min-width: 640px) {
+    .pdh__badges {
+      grid-template-columns: repeat(4, auto);
+      gap: 0.75rem;
+    }
+
+    .pdh__badge {
+      padding: 0.625rem 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .pdh__container {
+      padding-top: 12rem;
+    }
+
+    .pdh__content {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pdh__container {
+      padding-bottom: clamp(4rem, 6vw, 6rem);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .pdh__bg {
+      background-attachment: scroll;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+:root {
+  /* Colors */
+  --color-primary: #0891B2;
+  --color-primary-dark: #155E75;
+  --color-primary-light: #A5F3FC;
+  --color-secondary: #164E63;
+  --color-accent: #06B6D4;
+  --color-background: #FFFFFF;
+  --color-background-alt: #ECFEFF;
+  --color-surface: #F0F9FF;
+  --color-text: #0C4A6E;
+  --color-text-light: #7DD3FC;
+  --color-text-on-dark: #F0F9FF;
+  --color-border: #BAE6FD;
+
+  /* Typography */
+  --font-heading: 'Nunito', sans-serif;
+  --font-body: 'Merriweather', sans-serif;
+  --font-heading-weight: 800;
+  --font-body-weight: 300;
+  --heading-style: normal;
+  --type-scale: 1.2;
+
+  /* Shape */
+  --radius: 12px;
+  --radius-button: 24px;
+  --radius-card: 12px;
+
+  /* Spacing */
+  --section-padding: 6rem;
+  --spacing-scale: 1.15;
+
+  /* Personality-driven tokens */
+  --heading-scale: 1.1600000000000001;
+  --shadow-intensity: 0.7;
+  --anim-distance: 24px;
+  --anim-duration: 0.6s;
+  --anim-stagger: 80ms;
+}

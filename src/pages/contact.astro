@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../lib/site-config";
+import { getSeoForPage } from "../lib/seo";
+import StickyMinimal from "../../components/nav/StickyMinimal.astro";
+import SplitFormMap from "../../components/contact/SplitFormMap.astro";
+import MultiColumn from "../../components/footer/MultiColumn.astro";
+
+const biz = siteConfig.business;
+const seo = getSeoForPage("contact");
+---
+
+<BaseLayout
+  title={seo.title || `Contact Us | ${biz.name}`}
+  description={seo.description || `Contact ${biz.name} for a free ${biz.category.toLowerCase()} estimate in ${biz.city}, ${biz.state}. Call ${biz.phone}.`}
+>
+  <StickyMinimal slot="nav" />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Contact Us</h1>
+      <p class="hero-sub animate-fade-up">Get in touch for a free estimate</p>
+    </div>
+  </section>
+
+  <SplitFormMap />
+
+  <MultiColumn slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { padding: 8rem 0 3rem; background: var(--color-backgroundAlt); color: var(--color-textOnDark); }
+  .page-hero h1 { margin-bottom: 0.5rem; }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 1.1rem; }
+</style>

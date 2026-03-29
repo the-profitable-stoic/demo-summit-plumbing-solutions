@@ -1,0 +1,502 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { business } = siteConfig;
+const services = siteConfig.content.services;
+const serviceAreas = siteConfig.content.serviceAreas;
+const phoneHref = `tel:${business.phone.replace(/[^+\d]/g, "")}`;
+---
+
+<header class="centered-logo-nav" role="banner">
+  {/* Top bar with phone */}
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <a href={phoneHref} class="top-bar__phone" aria-label={`Call us at ${business.phone}`}>
+        <svg class="top-bar__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        {business.phone}
+      </a>
+      <a href="/contact" class="top-bar__cta">Get Free Estimate</a>
+    </div>
+  </div>
+
+  {/* Centered logo row */}
+  <div class="logo-row">
+    <div class="container logo-row__inner">
+      <a href="/" class="main-nav__logo" aria-label={`${business.name} - Home`}>
+        <span class="main-nav__logo-text">{business.name}</span>
+      </a>
+    </div>
+  </div>
+
+  {/* Main nav */}
+  <nav class="main-nav" aria-label="Main navigation">
+    <div class="container main-nav__inner">
+      <div class="main-nav__links" role="list">
+        <a href="/" class="main-nav__link">Home</a>
+        <a href="/about" class="main-nav__link">About</a>
+        <div class="nav-dropdown">
+          <button class="main-nav__link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Services <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="/services" class="dropdown-link" role="menuitem">All Services</a>
+            {services.slice(0, 6).map((s) => (
+              <a href={`/services/${s.slug}`} class="dropdown-link" role="menuitem">{s.name}</a>
+            ))}
+          </div>
+        </div>
+        {serviceAreas.length > 0 && (
+          <div class="nav-dropdown">
+            <button class="main-nav__link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+              Service Areas <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <div class="nav-dropdown-menu nav-dropdown-menu--wide" role="menu">
+              <a href="/service-areas" class="dropdown-link" role="menuitem">All Service Areas</a>
+              {serviceAreas.slice(0, 8).map((a) => (
+                <a href={`/service-areas/${a.slug}`} class="dropdown-link" role="menuitem">{a.city}, {a.state}</a>
+              ))}
+            </div>
+          </div>
+        )}
+        <a href="/reviews" class="main-nav__link">Reviews</a>
+        <a href="/contact" class="main-nav__link">Contact</a>
+      </div>
+
+      {/* Mobile hamburger */}
+      <button
+        class="main-nav__hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-overlay"
+        type="button"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  {/* Full-screen mobile overlay */}
+  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+    <button class="mobile-overlay__close" aria-label="Close menu" type="button">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <nav class="mobile-overlay__nav" aria-label="Mobile navigation">
+      <ul role="list">
+        <li class="mobile-overlay__item" style="--delay: 0s"><a href="/">Home</a></li>
+        <li class="mobile-overlay__item" style="--delay: 0.07s"><a href="/about">About</a></li>
+        <li class="mobile-overlay__item" style="--delay: 0.14s"><a href="/services">Services</a></li>
+        {services.slice(0, 6).map((s, i) => (
+          <li class="mobile-overlay__item mobile-overlay__subitem" style={`--delay: ${0.17 + i * 0.04}s`}>
+            <a href={`/services/${s.slug}`}>{s.name}</a>
+          </li>
+        ))}
+        {serviceAreas.length > 0 && (
+          <li class="mobile-overlay__item" style="--delay: 0.42s"><a href="/service-areas">Service Areas</a></li>
+        )}
+        {serviceAreas.slice(0, 8).map((a, i) => (
+          <li class="mobile-overlay__item mobile-overlay__subitem" style={`--delay: ${0.45 + i * 0.04}s`}>
+            <a href={`/service-areas/${a.slug}`}>{a.city}, {a.state}</a>
+          </li>
+        ))}
+        <li class="mobile-overlay__item" style="--delay: 0.78s"><a href="/reviews">Reviews</a></li>
+        <li class="mobile-overlay__item" style="--delay: 0.85s"><a href="/contact">Contact</a></li>
+      </ul>
+      <div class="mobile-overlay__phone">
+        <a href={phoneHref} class="btn-primary">{business.phone}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.main-nav__hamburger');
+    const overlay = document.querySelector('.mobile-overlay');
+    const closeBtn = document.querySelector('.mobile-overlay__close');
+    const overlayLinks = document.querySelectorAll('.mobile-overlay a');
+
+    function openMenu() {
+      overlay?.setAttribute('aria-hidden', 'false');
+      overlay?.classList.add('is-open');
+      hamburger?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      overlay?.setAttribute('aria-hidden', 'true');
+      overlay?.classList.remove('is-open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger?.addEventListener('click', openMenu);
+    closeBtn?.addEventListener('click', closeMenu);
+    overlayLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  });
+</script>
+
+<style>
+  /* Top bar */
+  .top-bar {
+    background: var(--color-primary);
+    color: var(--color-textOnDark, #fff);
+    padding: 0.5rem 0;
+  }
+
+  .top-bar__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .top-bar__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-textOnDark, #fff);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s ease;
+  }
+
+  .top-bar__phone:hover {
+    opacity: 0.85;
+  }
+
+  .top-bar__icon {
+    flex-shrink: 0;
+  }
+
+  .top-bar__cta {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-textOnDark, #fff);
+    border-radius: var(--radius);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+
+  .top-bar__cta:hover {
+    opacity: 0.9;
+  }
+
+  /* Logo row */
+  .logo-row {
+    background: var(--color-background);
+    padding: 1rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .logo-row__inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-nav__logo {
+    text-decoration: none;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .main-nav__logo-text {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight, 800);
+    font-size: 1.75rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .main-nav__logo:hover .main-nav__logo-text {
+    color: var(--color-primary);
+  }
+
+  /* Main nav */
+  .main-nav {
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .main-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    height: 52px;
+  }
+
+  .main-nav__links {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--color-text);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius);
+    position: relative;
+    transition: color 0.25s ease, background 0.2s;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .main-nav__link:hover {
+    color: var(--color-primary);
+    background: var(--color-surface);
+  }
+
+  /* ========== Dropdown ========== */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 220px;
+    padding: 0.5rem 0;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .dropdown-link {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.88rem;
+    color: var(--color-text);
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: background 0.15s, color 0.15s;
+  }
+  .dropdown-link:hover {
+    background: var(--color-surface);
+    color: var(--color-primary);
+  }
+  .nav-dropdown-menu--wide {
+    min-width: 240px;
+    columns: 2;
+    column-gap: 0;
+  }
+
+  /* Hamburger */
+  .main-nav__hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+
+  .main-nav__hamburger:hover .hamburger-line {
+    background: var(--color-primary);
+  }
+
+  /* Mobile overlay */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  .mobile-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-overlay__close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    color: var(--color-textOnDark, #fff);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-overlay__close:hover {
+    transform: rotate(90deg);
+  }
+
+  .mobile-overlay__nav {
+    text-align: center;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .mobile-overlay__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-overlay__item {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .mobile-overlay.is-open .mobile-overlay__item {
+    animation: overlayFadeIn 0.4s ease forwards;
+    animation-delay: var(--delay);
+  }
+
+  .mobile-overlay__item a {
+    color: var(--color-textOnDark, #fff);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight, 800);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.4;
+    transition: opacity 0.2s ease;
+    display: inline-block;
+    padding: 0.1rem 0;
+  }
+
+  .mobile-overlay__subitem a {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .mobile-overlay__item a:hover {
+    opacity: 0.7;
+  }
+
+  .mobile-overlay__phone {
+    margin-top: 2rem;
+    opacity: 0;
+  }
+
+  .mobile-overlay.is-open .mobile-overlay__phone {
+    animation: overlayFadeIn 0.4s ease forwards;
+    animation-delay: 0.9s;
+  }
+
+  .mobile-overlay__phone .btn-primary {
+    background: var(--color-textOnDark, #fff);
+    color: var(--color-primary);
+    border-color: var(--color-textOnDark, #fff);
+  }
+
+  @keyframes overlayFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .main-nav__links {
+      display: flex;
+    }
+
+    .main-nav__hamburger {
+      display: none;
+    }
+
+    .nav-dropdown-menu--wide {
+      columns: 2;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .main-nav__inner {
+      justify-content: flex-end;
+    }
+
+    .logo-row {
+      padding: 0.75rem 0;
+    }
+
+    .main-nav__logo-text {
+      font-size: 1.35rem;
+    }
+
+    .nav-dropdown-menu--wide {
+      columns: 1;
+    }
+  }
+</style>

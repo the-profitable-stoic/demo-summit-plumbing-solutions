@@ -1,0 +1,183 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const images = siteConfig.images.gallery || [];
+const { name, category } = siteConfig.business;
+---
+
+<section class="lightbox-grid section-padding" aria-label="Portfolio gallery">
+  <div class="container">
+    <div class="lightbox-grid__header animate-fade-up">
+      <h2 class="lightbox-grid__title">Our Portfolio</h2>
+      <p class="lightbox-grid__subtitle">Browse our recent {category.toLowerCase()} projects</p>
+    </div>
+
+    <div class="lightbox-grid__grid animate-stagger">
+      {images.map((src, i) => (
+        <a href={`#lightbox-${i}`} class="lightbox-grid__item animate-fade-up" aria-label={`View project image ${i + 1}`}>
+          <img
+            src={src}
+            alt={`${name} ${category} project ${i + 1}`}
+            class="lightbox-grid__img"
+            loading="lazy"
+            width="600"
+            height="450"
+          />
+          <div class="lightbox-grid__overlay">
+            <svg class="lightbox-grid__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <line x1="11" y1="8" x2="11" y2="14" />
+              <line x1="8" y1="11" x2="14" y2="11" />
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {images.map((src, i) => (
+      <div id={`lightbox-${i}`} class="lightbox-grid__lightbox" role="dialog" aria-label={`Project image ${i + 1}`}>
+        <a href="#!" class="lightbox-grid__lightbox-close" aria-label="Close lightbox">&times;</a>
+        <div class="lightbox-grid__lightbox-content">
+          <img
+            src={src}
+            alt={`${name} ${category} project ${i + 1} - full view`}
+            class="lightbox-grid__lightbox-img"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .lightbox-grid__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .lightbox-grid__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: inherit;
+    margin: 0 0 0.5rem;
+  }
+
+  .lightbox-grid__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    color: inherit; opacity: 0.7;
+    margin: 0;
+  }
+
+  .lightbox-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .lightbox-grid__item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    aspect-ratio: 4 / 3;
+  }
+
+  .lightbox-grid__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .lightbox-grid__item:hover .lightbox-grid__img {
+    transform: scale(1.05);
+  }
+
+  .lightbox-grid__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .lightbox-grid__icon {
+    color: var(--color-textOnDark);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .lightbox-grid__item:hover .lightbox-grid__overlay {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .lightbox-grid__item:hover .lightbox-grid__icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* CSS-only lightbox using :target */
+  .lightbox-grid__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox-grid__lightbox:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-grid__lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: opacity 0.2s ease;
+    opacity: 0.8;
+  }
+
+  .lightbox-grid__lightbox-close:hover {
+    opacity: 1;
+  }
+
+  .lightbox-grid__lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-grid__lightbox-img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+  }
+
+  @media (min-width: 768px) {
+    .lightbox-grid__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { name, phone, city, state } = siteConfig.business;
+const phoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+const year = new Date().getFullYear();
+
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'About', href: '/about' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<footer class="centered-stack" role="contentinfo">
+  <div class="container">
+    <div class="centered-stack__inner">
+      <span class="centered-stack__name">{name}</span>
+
+      <div class="centered-stack__divider"></div>
+
+      <nav class="centered-stack__nav" aria-label="Footer navigation">
+        <ul class="centered-stack__links">
+          {navLinks.map((link) => (
+            <li class="centered-stack__link-item">
+              <a href={link.href} class="centered-stack__link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="centered-stack__contact">
+        <a href={phoneHref} class="centered-stack__phone">{phone}</a>
+        <span class="centered-stack__location">{city}, {state}</span>
+      </div>
+
+      <p class="centered-stack__copyright">&copy; {year} {name}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .centered-stack {
+    background: var(--color-text);
+    color: var(--color-textOnDark);
+    padding: 3rem 0 2rem;
+  }
+
+  .centered-stack__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+
+  .centered-stack__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    color: var(--color-textOnDark);
+    letter-spacing: 0.02em;
+  }
+
+  .centered-stack__divider {
+    width: 48px;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 1px;
+  }
+
+  .centered-stack__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.75rem;
+  }
+
+  .centered-stack__link {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .centered-stack__link:hover {
+    opacity: 1;
+  }
+
+  .centered-stack__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+  }
+
+  .centered-stack__phone {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.1rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .centered-stack__phone:hover {
+    opacity: 1;
+  }
+
+  .centered-stack__location {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    opacity: 0.5;
+  }
+
+  .centered-stack__copyright {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    margin: 0.75rem 0 0;
+    opacity: 0.35;
+  }
+</style>

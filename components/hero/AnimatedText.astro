@@ -1,0 +1,231 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { business, content, design } = siteConfig;
+const { homepage, companyInfo } = content;
+
+const stats = [
+  { value: `${companyInfo.yearsInBusiness}+`, label: 'Years Experience' },
+  { value: `${companyInfo.projectsCompleted}+`, label: 'Projects Done' },
+  { value: `${companyInfo.satisfaction}%`, label: 'Satisfaction' },
+  { value: `${companyInfo.teamSize}+`, label: 'Team Members' },
+];
+---
+
+<section class="animated-text-hero" aria-label="Hero">
+  <div class="container ath__container">
+    <div class="ath__content">
+      {/* Category tag */}
+      <p class="ath__category animate-fade-in">
+        {business.category} &mdash; {business.city}, {business.state}
+      </p>
+
+      {/* Gradient headline */}
+      <h1 class="ath__headline animate-fade-up">
+        <span class="ath__headline-gradient">{homepage.heroHeadline}</span>
+      </h1>
+
+      {/* Animated underline */}
+      <div class="ath__line-wrap animate-fade-in">
+        <span class="ath__line"></span>
+      </div>
+
+      {/* Subline */}
+      <p class="ath__subline animate-fade-up">{homepage.heroSubline}</p>
+
+      {/* Buttons */}
+      <div class="ath__actions animate-fade-up">
+        <a href="/contact" class="btn-primary">Get Free Estimate</a>
+        <a href="/services" class="btn-secondary">Our Services</a>
+      </div>
+    </div>
+
+    {/* Stats row */}
+    <div class="ath__stats animate-fade-up">
+      {stats.map(stat => (
+        <div class="ath__stat">
+          <span class="ath__stat-value">{stat.value}</span>
+          <span class="ath__stat-label">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .animated-text-hero {
+    background: var(--color-backgroundAlt);
+    padding: clamp(5rem, 12vw, 9rem) 0 clamp(3rem, 8vw, 5rem);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle decorative dots */
+  .animated-text-hero::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    right: 5%;
+    width: 120px;
+    height: 120px;
+    background-image: radial-gradient(var(--color-primary) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .ath__container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 6vw, 5rem);
+  }
+
+  .ath__content {
+    text-align: center;
+    max-width: 52rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Category */
+  .ath__category {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  /* Headline with gradient */
+  .ath__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .ath__headline-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 50%,
+      var(--color-primary) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Animated underline */
+  .ath__line-wrap {
+    width: 100%;
+    max-width: 8rem;
+    height: 3px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--color-border);
+  }
+
+  .ath__line {
+    display: block;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 2px;
+    animation: lineSlide 3s ease-in-out infinite;
+  }
+
+  @keyframes lineSlide {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(200%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* Subline */
+  .ath__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--color-textLight);
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  /* Buttons */
+  .ath__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  /* Stats */
+  .ath__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 54rem;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ath__stat {
+    text-align: center;
+    padding: 1rem 0.5rem;
+  }
+
+  .ath__stat-value {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.1;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .ath__stat-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-textLight);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.375rem;
+  }
+
+  @media (min-width: 640px) {
+    .ath__stats {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .animated-text-hero {
+      padding: clamp(7rem, 14vw, 11rem) 0 clamp(4rem, 8vw, 6rem);
+    }
+
+    .ath__content {
+      gap: 1.75rem;
+    }
+  }
+</style>

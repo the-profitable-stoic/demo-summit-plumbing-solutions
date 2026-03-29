@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../lib/site-config";
+import { getSeoForPage } from "../../lib/seo";
+import StickyMinimal from "../../../components/nav/StickyMinimal.astro";
+import MultiColumn from "../../../components/footer/MultiColumn.astro";
+
+const biz = siteConfig.business;
+const areas = siteConfig.content.serviceAreas;
+const seo = getSeoForPage("service-areas");
+---
+
+<BaseLayout
+  title={seo.title || `Service Areas | ${biz.name}`}
+  description={seo.description || `${biz.name} provides professional ${biz.category.toLowerCase()} services across ${areas.length}+ locations. Call ${biz.phone}.`}
+>
+  <StickyMinimal slot="nav" />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Service Areas</h1>
+      <p class="hero-sub animate-fade-up">Proudly serving {biz.city} and {areas.length}+ surrounding communities</p>
+    </div>
+  </section>
+
+  <section class="section-padding section-light">
+    <div class="container">
+      <div class="areas-grid animate-stagger">
+        {areas.map((area) => (
+          <a href={`/service-areas/${area.slug}`} class="area-card">
+            <div class="area-card-inner">
+              <svg class="area-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <h2>{area.city}, {area.state}</h2>
+              <p>{area.content?.slice(0, 120)}...</p>
+              <span class="area-link">View details →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <MultiColumn slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 8rem 0 3rem;
+    background: var(--color-backgroundAlt);
+    color: var(--color-textOnDark);
+  }
+  .page-hero h1 { margin-bottom: 0.5rem; }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 1.1rem; }
+
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .area-card {
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .area-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+  .area-card-inner { padding: 1.5rem; }
+  .area-icon { margin-bottom: 0.75rem; }
+  .area-card h2 { font-size: 1.1rem; color: var(--color-text); margin-bottom: 0.4rem; }
+  .area-card p { font-size: 0.85rem; color: var(--color-textLight); line-height: 1.6; margin-bottom: 0.5rem; }
+  .area-link { font-size: 0.82rem; font-weight: 600; color: var(--color-primary); }
+</style>

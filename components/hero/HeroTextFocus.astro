@@ -1,0 +1,260 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const { heroHeadline, heroSubline } = siteConfig.content.homepage;
+const biz = siteConfig.business;
+const info = siteConfig.content.companyInfo;
+const variant = getVariant("hero");
+const useTextGradient = hasEffect("text-gradient");
+const useDotgrid = hasEffect("dotgrid");
+const useLines = hasEffect("lines");
+
+const bgEffectClass = useDotgrid ? "effect-dotgrid" : useLines ? "effect-lines" : "";
+---
+
+<section class={`hero-text-focus ${bgEffectClass}`} data-variant={variant} aria-label="Hero">
+  <div class="htf__container">
+    <div class="htf__content">
+      <span class="htf__label animate-fade-in">
+        {biz.category} &mdash; {biz.city}, {biz.state}
+      </span>
+
+      <h1 class={`htf__headline animate-fade-up ${useTextGradient ? "effect-text-gradient" : ""}`}>
+        {heroHeadline}
+      </h1>
+
+      <p class="htf__subline animate-fade-up">{heroSubline}</p>
+
+      <div class="htf__actions animate-fade-up">
+        <a href="/contact" class="btn-primary htf__cta">
+          Get Free Estimate
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-secondary htf__call">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call {biz.phone}
+        </a>
+      </div>
+    </div>
+
+    <div class="htf__stats animate-fade-up">
+      <div class="htf__stat">
+        <span class="htf__stat-value">{info.yearsInBusiness}+</span>
+        <span class="htf__stat-label">Years Experience</span>
+      </div>
+      <div class="htf__stat-divider" aria-hidden="true"></div>
+      <div class="htf__stat">
+        <span class="htf__stat-value">{info.projectsCompleted}</span>
+        <span class="htf__stat-label">Projects Completed</span>
+      </div>
+      <div class="htf__stat-divider" aria-hidden="true"></div>
+      <div class="htf__stat">
+        <span class="htf__stat-value">{info.satisfaction}</span>
+        <span class="htf__stat-label">Client Satisfaction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-text-focus {
+    position: relative;
+    min-height: 92vh;
+    min-height: 92dvh;
+    display: flex;
+    align-items: center;
+    background: var(--color-background);
+    overflow: hidden;
+    padding: clamp(5rem, 12vw, 9rem) 0;
+  }
+
+  /* Subtle decorative accent */
+  .hero-text-focus::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 6%, transparent) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .htf__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 6vw, 5rem);
+  }
+
+  .htf__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Default = left-aligned */
+  .htf__label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .htf__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0;
+    max-width: 14ch;
+  }
+
+  .htf__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin: 0;
+    max-width: 38rem;
+  }
+
+  .htf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .htf__cta {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .htf__call {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Stats */
+  .htf__stats {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .htf__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .htf__stat-value {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .htf__stat-label {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .htf__stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--color-border);
+  }
+
+  /* Centered variant */
+  .hero-text-focus[data-variant="centered"] .htf__content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text-focus[data-variant="centered"] .htf__headline {
+    max-width: 16ch;
+  }
+
+  .hero-text-focus[data-variant="centered"] .htf__subline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-text-focus[data-variant="centered"] .htf__actions {
+    justify-content: center;
+  }
+
+  .hero-text-focus[data-variant="centered"] .htf__stats {
+    justify-content: center;
+  }
+
+  /* Bold variant — oversized headline */
+  .hero-text-focus[data-variant="bold"] .htf__headline {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    max-width: 12ch;
+  }
+
+  .hero-text-focus[data-variant="bold"] .htf__label {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-text-focus {
+      min-height: auto;
+      padding: clamp(4rem, 10vw, 7rem) 0;
+    }
+
+    .htf__actions {
+      flex-direction: column;
+    }
+
+    .htf__cta,
+    .htf__call {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .htf__stats {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .htf__stat-divider {
+      display: none;
+    }
+
+    .hero-text-focus[data-variant="centered"] .htf__stats {
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .htf__container {
+      padding: 0 1.25rem;
+    }
+  }
+</style>

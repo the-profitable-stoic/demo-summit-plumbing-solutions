@@ -1,0 +1,372 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { name, phone, city, state, category } = siteConfig.business;
+const services = siteConfig.content.services || [];
+const serviceAreas = siteConfig.content.serviceAreas || [];
+const companyInfo = siteConfig.content.companyInfo;
+const phoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+const year = new Date().getFullYear();
+
+const displayedServices = services.slice(0, 6);
+const displayedAreas = serviceAreas.slice(0, 8);
+
+const companyLinks = [
+  { label: 'About Us', href: '/about' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Service Areas', href: '/service-areas' },
+];
+---
+
+<footer class="mega-footer" role="contentinfo">
+  <!-- CTA Bar -->
+  <div class="mega-footer__cta">
+    <div class="container">
+      <div class="mega-footer__cta-inner">
+        <h3 class="mega-footer__cta-title">Ready to get started?</h3>
+        <div class="mega-footer__cta-actions">
+          <a href={phoneHref} class="mega-footer__cta-phone">{phone}</a>
+          <a href="/contact" class="btn-primary mega-footer__cta-btn">Get Free Estimate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer Grid -->
+  <div class="mega-footer__main">
+    <div class="container">
+      <div class="mega-footer__grid">
+        <div class="mega-footer__col mega-footer__col--brand">
+          <h4 class="mega-footer__brand-name">{name}</h4>
+          <p class="mega-footer__tagline">Your trusted {category.toLowerCase()} professionals serving {city} and surrounding areas.</p>
+        </div>
+
+        <div class="mega-footer__col">
+          <h4 class="mega-footer__col-title">Services</h4>
+          <ul class="mega-footer__list">
+            {displayedServices.map((s) => (
+              <li><a href={`/services/${s.slug}`} class="mega-footer__list-link">{s.name}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="mega-footer__col">
+          <h4 class="mega-footer__col-title">Service Areas</h4>
+          <ul class="mega-footer__list">
+            {displayedAreas.map((area) => (
+              <li><a href={`/service-areas/${area.slug}`} class="mega-footer__list-link">{area.city}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="mega-footer__col">
+          <h4 class="mega-footer__col-title">Company</h4>
+          <ul class="mega-footer__list">
+            {companyLinks.map((link) => (
+              <li><a href={link.href} class="mega-footer__list-link">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="mega-footer__col">
+          <h4 class="mega-footer__col-title">Contact</h4>
+          <div class="mega-footer__contact-info">
+            <p class="mega-footer__contact-item">
+              <strong>Phone:</strong><br />
+              <a href={phoneHref} class="mega-footer__list-link">{phone}</a>
+            </p>
+            <p class="mega-footer__contact-item">
+              <strong>Location:</strong><br />
+              {city}, {state}
+            </p>
+            <p class="mega-footer__contact-item">
+              <strong>Hours:</strong><br />
+              Mon - Fri: 8am - 6pm<br />
+              Sat: 9am - 2pm
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="mega-footer__trust">
+    <div class="container">
+      <div class="mega-footer__trust-inner">
+        <div class="mega-footer__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Licensed &amp; Insured</span>
+        </div>
+        <div class="mega-footer__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>BBB A+ Rated</span>
+        </div>
+        {companyInfo?.yearsInBusiness && (
+          <div class="mega-footer__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>{companyInfo.yearsInBusiness}+ Years in Business</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="mega-footer__bottom">
+    <div class="container">
+      <div class="mega-footer__bottom-inner">
+        <p class="mega-footer__copyright">&copy; {year} {name}. All rights reserved.</p>
+        <div class="mega-footer__legal">
+          <a href="/privacy" class="mega-footer__legal-link">Privacy Policy</a>
+          <a href="/terms" class="mega-footer__legal-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .mega-footer {
+    background: var(--color-text);
+    color: var(--color-textOnDark);
+  }
+
+  /* CTA Bar */
+  .mega-footer__cta {
+    background: var(--color-primary);
+    padding: 1.5rem 0;
+  }
+
+  .mega-footer__cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .mega-footer__cta-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+    margin: 0;
+    color: var(--color-textOnDark);
+  }
+
+  .mega-footer__cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .mega-footer__cta-phone {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.25rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .mega-footer__cta-phone:hover {
+    opacity: 0.85;
+  }
+
+  .mega-footer__cta-btn {
+    background: var(--color-textOnDark);
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: 0.6rem 1.75rem;
+    border-radius: var(--radius-button);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .mega-footer__cta-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Main Grid */
+  .mega-footer__main {
+    padding: 3rem 0 2rem;
+  }
+
+  .mega-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .mega-footer__col-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 1rem;
+    color: var(--color-textOnDark);
+  }
+
+  .mega-footer__brand-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem;
+    color: var(--color-textOnDark);
+  }
+
+  .mega-footer__tagline {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.6;
+    margin: 0;
+    max-width: 280px;
+  }
+
+  .mega-footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mega-footer__list-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  .mega-footer__list-link:hover {
+    opacity: 1;
+  }
+
+  .mega-footer__contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mega-footer__contact-item {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.6;
+  }
+
+  .mega-footer__contact-item strong {
+    opacity: 1;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Trust Badges */
+  .mega-footer__trust {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.5rem 0;
+  }
+
+  .mega-footer__trust-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 2.5rem;
+  }
+
+  .mega-footer__badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.6;
+  }
+
+  .mega-footer__badge svg {
+    flex-shrink: 0;
+  }
+
+  /* Bottom Bar */
+  .mega-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem 0;
+  }
+
+  .mega-footer__bottom-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .mega-footer__copyright {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.4;
+  }
+
+  .mega-footer__legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .mega-footer__legal-link {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  .mega-footer__legal-link:hover {
+    opacity: 0.7;
+  }
+
+  @media (min-width: 600px) {
+    .mega-footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mega-footer__col--brand {
+      grid-column: 1 / -1;
+    }
+
+    .mega-footer__cta-inner {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mega-footer__grid {
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+    }
+
+    .mega-footer__col--brand {
+      grid-column: auto;
+    }
+
+    .mega-footer__bottom-inner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>

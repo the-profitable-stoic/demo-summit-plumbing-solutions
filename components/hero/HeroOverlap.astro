@@ -1,0 +1,351 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const { heroHeadline, heroSubline } = siteConfig.content.homepage;
+const biz = siteConfig.business;
+const heroImage = siteConfig.images.hero;
+const info = siteConfig.content.companyInfo;
+const variant = getVariant("hero");
+const useGlass = hasEffect("glass");
+---
+
+<section class="hero-overlap" data-variant={variant} aria-label="Hero">
+  <div class="ho__content-side">
+    <div class="ho__inner">
+      <span class="ho__badge animate-fade-in">
+        {biz.category} in {biz.city}, {biz.state}
+      </span>
+      <h1 class="ho__headline animate-fade-up">{heroHeadline}</h1>
+      <p class="ho__subline animate-fade-up">{heroSubline}</p>
+
+      <div class="ho__actions animate-fade-up">
+        <a href="/contact" class="btn-primary ho__cta">
+          Get Free Estimate
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-secondary ho__call">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          {biz.phone}
+        </a>
+      </div>
+
+      <div class={`ho__stats animate-fade-up ${useGlass ? "ho__stats--glass" : ""}`}>
+        <div class="ho__stat">
+          <strong>{info.yearsInBusiness}+</strong>
+          <span>Years Experience</span>
+        </div>
+        <div class="ho__stat">
+          <strong>{info.projectsCompleted}</strong>
+          <span>Projects Done</span>
+        </div>
+        <div class="ho__stat">
+          <strong>{info.satisfaction}</strong>
+          <span>Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ho__image-side animate-scale-in">
+    {heroImage && (
+      <img src={heroImage} alt={`${biz.category} services in ${biz.city}, ${biz.state}`} class="ho__image" loading="eager" />
+    )}
+    <div class="ho__image-overlay" aria-hidden="true"></div>
+  </div>
+</section>
+
+<style>
+  .hero-overlap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 92vh;
+    overflow: visible;
+    position: relative;
+    background: var(--color-background);
+  }
+
+  /* Content side */
+  .ho__content-side {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ho__inner {
+    max-width: 540px;
+    margin-left: auto;
+    padding: 4rem 3rem 4rem 0;
+  }
+
+  .ho__badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .ho__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    color: var(--color-text);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+  }
+
+  .ho__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+    max-width: 480px;
+  }
+
+  .ho__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .ho__cta {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ho__call {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Trust stats */
+  .ho__stats {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .ho__stats--glass {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem 1.5rem;
+  }
+
+  .ho__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .ho__stat strong {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    line-height: 1.2;
+  }
+
+  .ho__stat span {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Image side — overlapping */
+  .ho__image-side {
+    position: relative;
+    overflow: visible;
+    margin-right: -5vw;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border-radius: var(--radius-card) 0 0 var(--radius-card);
+    clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .ho__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ho__image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--color-background) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* Reversed variant: image overlaps left */
+  .hero-overlap[data-variant="reversed"] {
+    direction: rtl;
+  }
+
+  .hero-overlap[data-variant="reversed"] > * {
+    direction: ltr;
+  }
+
+  .hero-overlap[data-variant="reversed"] .ho__image-side {
+    margin-right: 0;
+    margin-left: -5vw;
+    clip-path: polygon(0% 0%, 92% 0%, 100% 100%, 0% 100%);
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  }
+
+  .hero-overlap[data-variant="reversed"] .ho__image-overlay {
+    background: linear-gradient(to left, var(--color-background) 0%, transparent 30%);
+  }
+
+  .hero-overlap[data-variant="reversed"] .ho__inner {
+    margin-left: 0;
+    margin-right: auto;
+    padding: 4rem 0 4rem 3rem;
+  }
+
+  /* Centered variant: image behind with content overlay */
+  .hero-overlap[data-variant="centered"] {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__content-side {
+    position: relative;
+    z-index: 3;
+    justify-content: center;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__inner {
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    max-width: 680px;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__actions {
+    justify-content: center;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__stats {
+    justify-content: center;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__image-side {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    clip-path: none;
+    border-radius: 0;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__image-overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__headline {
+    color: #fff;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__subline {
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__badge {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-primary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__stat strong {
+    color: var(--color-primary);
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__stat span {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__call {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+
+  .hero-overlap[data-variant="centered"] .ho__call:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 1023px) {
+    .hero-overlap {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .ho__image-side {
+      order: -1;
+      height: 50vh;
+      min-height: 320px;
+      margin: 0;
+      clip-path: none;
+      border-radius: 0;
+    }
+
+    .ho__image-overlay {
+      background: linear-gradient(to top, var(--color-background) 0%, transparent 40%) !important;
+    }
+
+    .ho__content-side {
+      padding: 0 1.5rem;
+    }
+
+    .ho__inner {
+      padding: 2.5rem 0;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    .hero-overlap[data-variant="reversed"] .ho__inner {
+      padding: 2.5rem 0;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ho__image-side {
+      height: 40vh;
+      min-height: 260px;
+    }
+
+    .ho__actions {
+      flex-direction: column;
+    }
+
+    .ho__cta,
+    .ho__call {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .ho__stats {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+</style>

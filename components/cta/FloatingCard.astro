@@ -1,0 +1,106 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { phone } = siteConfig.business;
+const { ctaHeadline, ctaSubline } = siteConfig.content.homepage;
+const phoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+---
+
+<section class="floating-card-wrapper section-padding" aria-label="Call to action">
+  <div class="container">
+    <div class="floating-card animate-scale-in">
+      <h2 class="floating-card__headline">{ctaHeadline}</h2>
+      <p class="floating-card__subline">{ctaSubline}</p>
+      <div class="floating-card__actions">
+        <a href={phoneHref} class="btn-primary floating-card__btn-primary">Call {phone}</a>
+        <a href="/contact" class="btn-secondary floating-card__btn-secondary">Request a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .floating-card-wrapper {
+    position: relative;
+    padding-top: 0;
+  }
+
+  .floating-card {
+    position: relative;
+    max-width: 800px;
+    margin: -3rem auto 0;
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.04),
+      0 12px 28px rgba(0, 0, 0, 0.08),
+      0 24px 56px rgba(0, 0, 0, 0.06);
+    z-index: 10;
+  }
+
+  .floating-card__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+    color: inherit;
+  }
+
+  .floating-card__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--color-textLight);
+    margin: 0 0 2rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .floating-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .floating-card__btn-primary,
+  .floating-card__btn-secondary {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    border-radius: var(--radius-button);
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 220px;
+    text-align: center;
+  }
+
+  .floating-card__btn-primary:hover,
+  .floating-card__btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (min-width: 540px) {
+    .floating-card {
+      padding: 3.5rem 3rem;
+      margin-top: -4rem;
+    }
+
+    .floating-card__actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .floating-card {
+      padding: 4rem 4rem;
+    }
+  }
+</style>

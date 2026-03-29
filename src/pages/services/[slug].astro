@@ -1,0 +1,326 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../lib/site-config";
+import { getSeoForPage, generateServiceJsonLd, generateFaqJsonLd, generateBreadcrumbJsonLd } from "../../lib/seo";
+import MultiColumn from "../../../components/footer/MultiColumn.astro";
+import StickyMinimal from "../../../components/nav/StickyMinimal.astro";
+
+export function getStaticPaths() {
+  return siteConfig.content.services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const biz = siteConfig.business;
+const serviceImage = siteConfig.images.services?.[service.slug] || siteConfig.images.hero;
+const seo = getSeoForPage(`services/${service.slug}`);
+const siteUrl = Astro.site?.href || "";
+
+const breadcrumbs = [
+  { name: "Home", url: siteUrl },
+  { name: "Services", url: `${siteUrl}services/` },
+  { name: service.name, url: `${siteUrl}services/${service.slug}/` },
+];
+
+const jsonLd = [
+  generateServiceJsonLd({ name: service.name, description: service.shortDescription || service.description.slice(0, 200) }),
+  generateBreadcrumbJsonLd(breadcrumbs),
+  service.faq?.length > 0 ? generateFaqJsonLd(service.faq) : null,
+].filter(Boolean).join("");
+---
+
+<BaseLayout
+  title={seo.title || `${service.name} | ${biz.name}`}
+  description={seo.description || service.shortDescription || `Professional ${service.name.toLowerCase()} services in ${biz.city}, ${biz.state}. Call ${biz.phone}.`}
+  jsonLd={jsonLd}
+>
+  <StickyMinimal slot="nav" />
+
+  <!-- Compact Hero -->
+  <section class="service-hero">
+    {serviceImage && <img src={serviceImage} alt={service.name} class="service-hero-bg" loading="eager" />}
+    <div class="service-hero-overlay"></div>
+    <div class="container service-hero-content">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="bc-sep">/</span>
+        <a href="/services">Services</a>
+        <span class="bc-sep">/</span>
+        <span aria-current="page">{service.name}</span>
+      </nav>
+      <h1 class="service-hero-title animate-fade-up">{service.name}</h1>
+      <p class="service-hero-sub animate-fade-up">{service.shortDescription}</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <article class="service-content section-padding section-light">
+    <div class="container service-layout">
+      <div class="service-main">
+        <div class="service-body animate-fade-up" set:html={service.description.replace(/\n/g, "<br/>")} />
+
+        <!-- Process -->
+        {service.process && service.process.length > 0 && (
+          <section class="service-process animate-fade-up">
+            <h2>Our Process</h2>
+            <ol class="process-list">
+              {service.process.map((step, i) => (
+                <li class="process-step">
+                  <span class="step-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="step-text">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        <!-- Benefits -->
+        {service.benefits && service.benefits.length > 0 && (
+          <section class="service-benefits animate-fade-up">
+            <h2>Benefits</h2>
+            <ul class="benefits-list">
+              {service.benefits.map((b) => (
+                <li class="benefit-item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <!-- FAQ -->
+        {service.faq && service.faq.length > 0 && (
+          <section class="service-faq animate-fade-up">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+              {service.faq.map((f) => (
+                <details class="faq-item">
+                  <summary class="faq-question">{f.question}</summary>
+                  <p class="faq-answer">{f.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="service-sidebar">
+        <div class="sidebar-cta animate-fade-up">
+          <h3>Get a Free Estimate</h3>
+          <p>Ready to get started with {service.name.toLowerCase()}? Contact us today.</p>
+          <a href="/contact" class="btn-primary sidebar-btn">Request Quote</a>
+          <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="sidebar-phone">
+            Or call: <strong>{biz.phone}</strong>
+          </a>
+        </div>
+
+        <div class="sidebar-services animate-fade-up">
+          <h3>Our Services</h3>
+          <ul>
+            {siteConfig.content.services.map((s) => (
+              <li class={s.slug === service.slug ? "active" : ""}>
+                <a href={`/services/${s.slug}`}>{s.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <MultiColumn slot="footer" />
+</BaseLayout>
+
+<style>
+  .service-hero {
+    position: relative;
+    padding: 8rem 0 4rem;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+    background: var(--color-backgroundAlt);
+    overflow: hidden;
+  }
+  .service-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .service-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.75));
+  }
+  .service-hero-content { position: relative; z-index: 2; }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+  }
+  .breadcrumbs a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .breadcrumbs a:hover { color: #fff; }
+  .bc-sep { opacity: 0.4; }
+  .service-hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .service-hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+  }
+
+  .service-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3rem;
+    align-items: start;
+  }
+  .service-main h2 {
+    font-size: 1.5rem;
+    margin: 3rem 0 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .service-main h2:first-of-type { border-top: none; padding-top: 0; margin-top: 2rem; }
+  .service-body {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--color-textLight);
+  }
+
+  /* Process */
+  .process-list { list-style: none; padding: 0; }
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--color-primary);
+    background: var(--color-primaryLight);
+    border-radius: 50%;
+  }
+  .step-text { padding-top: 0.35rem; color: var(--color-text); }
+
+  /* Benefits */
+  .benefits-list { list-style: none; padding: 0; }
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    color: var(--color-text);
+    font-size: 0.98rem;
+  }
+
+  /* FAQ */
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .faq-question {
+    padding: 1.25rem 0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question::after {
+    content: "+";
+    float: right;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    transition: transform 0.2s;
+  }
+  details[open] .faq-question::after { content: "−"; }
+  .faq-answer {
+    padding: 0 0 1.25rem;
+    color: var(--color-textLight);
+    line-height: 1.75;
+  }
+
+  /* Sidebar */
+  .service-sidebar {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .sidebar-cta {
+    padding: 2rem;
+    background: var(--color-backgroundAlt);
+    color: var(--color-textOnDark);
+    border-radius: var(--radius-card);
+  }
+  .sidebar-cta h3 { margin-bottom: 0.75rem; }
+  .sidebar-cta p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.25rem; line-height: 1.6; }
+  .sidebar-btn { width: 100%; justify-content: center; margin-bottom: 0.75rem; }
+  .sidebar-phone {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+  }
+  .sidebar-phone:hover { color: #fff; }
+
+  .sidebar-services {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+  .sidebar-services h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+  .sidebar-services ul { list-style: none; padding: 0; }
+  .sidebar-services li {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sidebar-services li:last-child { border-bottom: none; }
+  .sidebar-services a {
+    display: block;
+    padding: 0.6rem 0;
+    font-size: 0.88rem;
+    color: var(--color-textLight);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .sidebar-services a:hover { color: var(--color-primary); }
+  .sidebar-services li.active a {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1023px) {
+    .service-layout { grid-template-columns: 1fr; }
+    .service-sidebar {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .sidebar-cta, .sidebar-services { flex: 1; min-width: 280px; }
+  }
+</style>

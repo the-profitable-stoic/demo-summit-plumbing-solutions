@@ -1,0 +1,253 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const services = siteConfig.content.services;
+const serviceImages = siteConfig.images.services;
+const biz = siteConfig.business;
+const variant = getVariant("services");
+
+const shadowDepth = hasEffect("shadow-depth");
+const hoverLift = hasEffect("hover-lift");
+const featured = services[0];
+const rest = services.slice(1);
+---
+
+<section class="bento-services section-padding" aria-labelledby="bento-services-heading" data-variant={variant}>
+  <div class="bento-services__container">
+    <div class="bento-services__header animate-fade-up">
+      <h2 id="bento-services-heading" class="bento-services__title">Our Services</h2>
+      <p class="bento-services__subtitle">
+        Explore the full range of professional services offered by {biz.name}.
+      </p>
+    </div>
+
+    <div class="bento-services__grid animate-stagger">
+      {/* Featured (first) service */}
+      <a
+        href={`/services/${featured.slug}`}
+        class:list={[
+          "bento-services__cell",
+          "bento-services__cell--featured",
+          "animate-fade-up",
+          { "effect-shadow-depth": shadowDepth, "effect-hover-lift": hoverLift },
+        ]}
+        aria-label={`Learn more about ${featured.name}`}
+        style="--stagger-index: 0"
+      >
+        {serviceImages[featured.slug] ? (
+          <img
+            src={serviceImages[featured.slug]}
+            alt={featured.name}
+            class="bento-services__img"
+            loading="eager"
+            width="800"
+            height="600"
+          />
+        ) : (
+          <div class="bento-services__img-placeholder" aria-hidden="true" />
+        )}
+        <div class="bento-services__overlay">
+          <h3 class="bento-services__name">{featured.name}</h3>
+        </div>
+      </a>
+
+      {/* Remaining services */}
+      {rest.map((service, i) => (
+        <a
+          href={`/services/${service.slug}`}
+          class:list={[
+            "bento-services__cell",
+            "animate-fade-up",
+            { "effect-shadow-depth": shadowDepth, "effect-hover-lift": hoverLift },
+          ]}
+          aria-label={`Learn more about ${service.name}`}
+          style={`--stagger-index: ${i + 1}`}
+        >
+          {serviceImages[service.slug] ? (
+            <img
+              src={serviceImages[service.slug]}
+              alt={service.name}
+              class="bento-services__img"
+              loading="lazy"
+              width="400"
+              height="300"
+            />
+          ) : (
+            <div class="bento-services__img-placeholder" aria-hidden="true" />
+          )}
+          <div class="bento-services__overlay">
+            <h3 class="bento-services__name">{service.name}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .bento-services {
+    background: var(--color-background);
+  }
+
+  .bento-services__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .bento-services__header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3rem;
+  }
+
+  .bento-services__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0 0 0.75rem;
+    line-height: 1.15;
+  }
+
+  .bento-services__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: inherit;
+    opacity: 0.7;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ---- Default variant: featured spans 2 rows + 2 cols on left ---- */
+  .bento-services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  [data-variant="default"] .bento-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    [data-variant="default"] .bento-services__grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(200px, auto);
+    }
+
+    [data-variant="default"] .bento-services__cell--featured {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+  }
+
+  /* ---- Alt variant: featured full-width top, rest 3-col below ---- */
+  @media (min-width: 768px) {
+    [data-variant="alt"] .bento-services__grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(200px, auto);
+    }
+
+    [data-variant="alt"] .bento-services__cell--featured {
+      grid-column: 1 / -1;
+      min-height: 340px;
+    }
+  }
+
+  /* ---- Compact variant: masonry-like with varying heights ---- */
+  [data-variant="compact"] .bento-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    [data-variant="compact"] .bento-services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    [data-variant="compact"] .bento-services__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  [data-variant="compact"] .bento-services__cell--featured {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  [data-variant="compact"] .bento-services__cell:nth-child(odd) {
+    min-height: 260px;
+  }
+
+  [data-variant="compact"] .bento-services__cell:nth-child(even) {
+    min-height: 200px;
+  }
+
+  /* ---- Cell shared styles ---- */
+  .bento-services__cell {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-text-on-dark);
+    min-height: 200px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .bento-services__cell:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .bento-services__cell:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .bento-services__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .bento-services__cell:hover .bento-services__img {
+    transform: scale(1.05);
+  }
+
+  .bento-services__img-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  }
+
+  .bento-services__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 60%);
+  }
+
+  .bento-services__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    margin: 0;
+    line-height: 1.3;
+    color: #fff;
+  }
+
+  .bento-services__cell--featured .bento-services__name {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+</style>

@@ -1,0 +1,253 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const reviews = siteConfig.content.reviews;
+const sorted = [...reviews].sort((a, b) => b.rating - a.rating);
+const featured = sorted[0];
+const remaining = sorted.slice(1);
+---
+
+<section class="large-quote-section section-padding">
+  <div class="container">
+    {/* Featured hero quote */}
+    <div class="large-quote-hero animate-fade-up">
+      <div class="large-quote-marks" aria-hidden="true">
+        <svg class="large-quote-mark large-quote-mark--open" width="64" height="64" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <path d="M14 34.5c0-7.5 5-14.5 13-19l2.5 4C24 23 21 27.5 20.5 32H28v14H14V34.5zm22 0c0-7.5 5-14.5 13-19l2.5 4C46 23 43 27.5 42.5 32H50v14H36V34.5z" />
+        </svg>
+      </div>
+
+      <blockquote class="large-quote-text">
+        <p>{featured.text}</p>
+      </blockquote>
+
+      <div class="large-quote-stars" aria-label={`${featured.rating} out of 5 stars`}>
+        {Array.from({ length: 5 }).map((_, s) => (
+          <svg
+            class={`large-quote-star ${s < featured.rating ? 'large-quote-star--filled' : ''}`}
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill={s < featured.rating ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            stroke-width="1.5"
+            aria-hidden="true"
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        ))}
+      </div>
+
+      <footer class="large-quote-attribution">
+        <cite class="large-quote-name">{featured.name}</cite>
+        {featured.service && (
+          <span class="large-quote-service">{featured.service}</span>
+        )}
+      </footer>
+    </div>
+
+    {/* Remaining reviews grid */}
+    {remaining.length > 0 && (
+      <div class="large-quote-grid">
+        {remaining.map((review, i) => (
+          <article class="large-quote-card animate-fade-up animate-stagger" style={`--stagger-index: ${i}`}>
+            <div class="large-quote-card-stars" aria-label={`${review.rating} out of 5 stars`}>
+              {Array.from({ length: 5 }).map((_, s) => (
+                <svg
+                  class={`large-quote-card-star ${s < review.rating ? 'large-quote-card-star--filled' : ''}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill={s < review.rating ? 'currentColor' : 'none'}
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+            <blockquote class="large-quote-card-text">
+              <p>{review.text}</p>
+            </blockquote>
+            <footer class="large-quote-card-footer">
+              <cite class="large-quote-card-name">{review.name}</cite>
+              {review.service && (
+                <span class="large-quote-card-service">{review.service}</span>
+              )}
+            </footer>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .large-quote-section {
+    background: var(--color-primaryDark);
+    color: var(--color-textOnDark);
+  }
+
+  /* === Featured hero quote === */
+  .large-quote-hero {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 4rem;
+    position: relative;
+  }
+
+  .large-quote-marks {
+    margin-bottom: 1rem;
+  }
+
+  .large-quote-mark {
+    color: var(--color-textOnDark);
+    opacity: 0.15;
+  }
+
+  .large-quote-text {
+    margin: 0 0 1.5rem;
+  }
+
+  .large-quote-text p {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.35rem, 3.5vw, 2.25rem);
+    line-height: 1.45;
+    font-style: italic;
+    color: var(--color-textOnDark);
+    margin: 0;
+  }
+
+  .large-quote-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .large-quote-star {
+    color: var(--color-textOnDark);
+    opacity: 0.3;
+  }
+
+  .large-quote-star--filled {
+    color: var(--color-accent);
+    opacity: 1;
+  }
+
+  .large-quote-attribution {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .large-quote-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.15rem;
+    font-style: normal;
+    color: var(--color-textOnDark);
+  }
+
+  .large-quote-service {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-textOnDark);
+    opacity: 0.65;
+  }
+
+  /* Divider between hero and grid */
+  .large-quote-hero::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: var(--color-textOnDark);
+    opacity: 0.15;
+    margin: 3rem auto 0;
+  }
+
+  /* === Remaining reviews grid === */
+  .large-quote-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .large-quote-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-card);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .large-quote-card-stars {
+    display: flex;
+    gap: 0.15rem;
+  }
+
+  .large-quote-card-star {
+    color: var(--color-textOnDark);
+    opacity: 0.25;
+  }
+
+  .large-quote-card-star--filled {
+    color: var(--color-accent);
+    opacity: 1;
+  }
+
+  .large-quote-card-text {
+    margin: 0;
+    flex: 1;
+  }
+
+  .large-quote-card-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--color-textOnDark);
+    opacity: 0.88;
+    margin: 0;
+  }
+
+  .large-quote-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .large-quote-card-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 0.95rem;
+    font-style: normal;
+    color: var(--color-textOnDark);
+  }
+
+  .large-quote-card-service {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-textOnDark);
+    opacity: 0.55;
+  }
+
+  @media (min-width: 640px) {
+    .large-quote-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .large-quote-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

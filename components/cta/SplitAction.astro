@@ -1,0 +1,150 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { name, phone, category } = siteConfig.business;
+const { ctaHeadline, ctaSubline } = siteConfig.content.homepage;
+const phoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+---
+
+<section class="split-action" aria-label="Call to action">
+  <div class="split-action__left animate-fade-up">
+    <div class="split-action__left-inner">
+      <h2 class="split-action__headline">{ctaHeadline}</h2>
+      <p class="split-action__subline">{ctaSubline}</p>
+    </div>
+  </div>
+  <div class="split-action__right animate-fade-up">
+    <div class="split-action__right-inner">
+      <span class="split-action__phone-label">Call us directly</span>
+      <a href={phoneHref} class="split-action__phone">{phone}</a>
+      <a href={phoneHref} class="btn-primary split-action__btn">Call Now</a>
+      <a href="/contact" class="split-action__quote-link">Or request a quote &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .split-action {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 360px;
+  }
+
+  .split-action__left {
+    background: var(--color-text);
+    color: var(--color-textOnDark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+  }
+
+  .split-action__left-inner {
+    max-width: 480px;
+  }
+
+  .split-action__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    color: var(--color-textOnDark);
+  }
+
+  .split-action__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  .split-action__right {
+    background: var(--color-primary);
+    color: var(--color-textOnDark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .split-action__right-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .split-action__phone-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.8;
+  }
+
+  .split-action__phone {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--color-textOnDark);
+    text-decoration: none;
+    line-height: 1.1;
+    transition: opacity 0.2s ease;
+  }
+
+  .split-action__phone:hover {
+    opacity: 0.85;
+  }
+
+  .split-action__btn {
+    margin-top: 0.5rem;
+    background: var(--color-textOnDark);
+    color: var(--color-primary);
+    font-weight: 700;
+    padding: 0.875rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: var(--radius-button);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .split-action__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .split-action__quote-link {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-textOnDark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    margin-top: 0.25rem;
+  }
+
+  .split-action__quote-link:hover {
+    opacity: 1;
+  }
+
+  @media (min-width: 768px) {
+    .split-action {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .split-action__left {
+      padding: 4rem 3rem;
+    }
+
+    .split-action__right {
+      padding: 4rem 3rem;
+    }
+  }
+</style>

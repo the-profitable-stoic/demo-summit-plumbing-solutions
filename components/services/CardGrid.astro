@@ -1,0 +1,188 @@
+---
+import { siteConfig } from "../../lib/site-config";
+
+const services = siteConfig.content.services;
+const serviceImages = siteConfig.images.services;
+const businessName = siteConfig.business.name;
+---
+
+<section class="services-grid section-padding" aria-labelledby="services-heading">
+  <div class="services-grid__container">
+    <div class="services-grid__header animate-fade-up">
+      <h2 id="services-heading" class="services-grid__title">Our Services</h2>
+      <p class="services-grid__intro">
+        {businessName} delivers expert craftsmanship and reliable results across every project. Explore our full range of professional services.
+      </p>
+    </div>
+
+    <div class="services-grid__cards animate-stagger">
+      {services.map((service) => (
+        <a href={`/services/${service.slug}`} class="services-card animate-fade-up" aria-label={`Learn more about ${service.name}`}>
+          <div class="services-card__image-wrap">
+            <img
+              src={serviceImages[service.slug] || "/images/placeholder-service.jpg"}
+              alt={service.name}
+              class="services-card__image"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="267"
+            />
+          </div>
+          <div class="services-card__body">
+            <h3 class="services-card__name">{service.name}</h3>
+            <p class="services-card__desc">{service.shortDescription}</p>
+            <span class="services-card__link" aria-hidden="true">
+              Learn More <span class="services-card__arrow">&rarr;</span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    padding: var(--section-padding);
+    background: var(--color-background);
+  }
+
+  .services-grid__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .services-grid__header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .services-grid__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0 0 1rem;
+    line-height: 1.15;
+  }
+
+  .services-grid__intro {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.175rem);
+    color: inherit; opacity: 0.7;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .services-grid__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .services-grid__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .services-grid__cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .services-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+
+  .services-card:hover,
+  .services-card:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  }
+
+  .services-card:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .services-card__image-wrap {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  .services-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+
+  .services-card:hover .services-card__image {
+    transform: scale(1.05);
+  }
+
+  .services-card__body {
+    padding: 1.5rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .services-card__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.125rem, 2vw, 1.35rem);
+    color: inherit;
+    margin: 0 0 0.6rem;
+    line-height: 1.3;
+  }
+
+  .services-card__desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: inherit; opacity: 0.7;
+    line-height: 1.65;
+    margin: 0 0 1.25rem;
+    flex: 1;
+  }
+
+  .services-card__link {
+    font-family: var(--font-body);
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: gap 0.25s ease;
+  }
+
+  .services-card:hover .services-card__link {
+    gap: 0.6rem;
+  }
+
+  .services-card__arrow {
+    font-size: 1.1em;
+    transition: transform 0.25s ease;
+  }
+
+  .services-card:hover .services-card__arrow {
+    transform: translateX(2px);
+  }
+</style>

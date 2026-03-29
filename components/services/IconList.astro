@@ -1,0 +1,175 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const services = siteConfig.content.services;
+---
+
+<section class="icon-list-services section-padding">
+  <div class="container">
+    <div class="icon-list-header animate-fade-up">
+      <p class="icon-list-label">Services</p>
+      <h2 class="icon-list-title">What We Do</h2>
+    </div>
+
+    <div class="icon-list-rows">
+      {services.map((service, i) => (
+        <a
+          href={`/services/${service.slug}`}
+          class="icon-list-row animate-fade-up animate-stagger"
+          style={`--stagger-index: ${i}`}
+        >
+          <span class="icon-list-number" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div class="icon-list-content">
+            <h3 class="icon-list-name">{service.name}</h3>
+            <p class="icon-list-desc">{service.shortDescription}</p>
+          </div>
+          <span class="icon-list-link">
+            Learn More <span class="icon-list-arrow" aria-hidden="true">&rarr;</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .icon-list-services {
+    background: var(--color-background);
+  }
+
+  .icon-list-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .icon-list-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  .icon-list-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .icon-list-rows {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .icon-list-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+    cursor: pointer;
+  }
+
+  .icon-list-row:hover,
+  .icon-list-row:focus-visible {
+    background-color: var(--color-backgroundAlt);
+    padding-left: 1.5rem;
+    outline: none;
+  }
+
+  .icon-list-number {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: inherit; opacity: 0.7;
+    line-height: 1;
+    min-width: 2.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .icon-list-row:hover .icon-list-number,
+  .icon-list-row:focus-visible .icon-list-number {
+    color: var(--color-primary);
+  }
+
+  .icon-list-content {
+    min-width: 0;
+  }
+
+  .icon-list-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    color: inherit;
+    margin: 0 0 0.35rem;
+    line-height: 1.3;
+  }
+
+  .icon-list-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: inherit; opacity: 0.7;
+    margin: 0;
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+
+  .icon-list-link {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .icon-list-row:hover .icon-list-link,
+  .icon-list-row:focus-visible .icon-list-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .icon-list-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .icon-list-row:hover .icon-list-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Mobile layout */
+  @media (max-width: 640px) {
+    .icon-list-row {
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      padding: 1.25rem 0.5rem;
+    }
+
+    .icon-list-link {
+      grid-column: 2;
+      opacity: 1;
+      transform: none;
+      justify-self: start;
+    }
+
+    .icon-list-number {
+      grid-row: 1 / 3;
+      align-self: start;
+      margin-top: 0.15rem;
+    }
+  }
+</style>

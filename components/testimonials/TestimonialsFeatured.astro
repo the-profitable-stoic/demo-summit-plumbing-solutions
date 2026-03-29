@@ -1,0 +1,280 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const reviews = siteConfig.content.reviews;
+const variant = getVariant("testimonials");
+const isCentered = variant === "centered";
+const sorted = [...reviews].sort((a, b) => b.rating - a.rating);
+const featured = sorted[0];
+const others = sorted.slice(1, 5);
+---
+
+<section class="testimonials-featured section-padding" aria-labelledby="featured-testimonials-heading">
+  <div class:list={["testimonials-featured__container", { "testimonials-featured__container--centered": isCentered }]}>
+    <div class="testimonials-featured__header animate-fade-up">
+      <h2 id="featured-testimonials-heading" class="testimonials-featured__title">What Our Clients Say</h2>
+    </div>
+
+    <div class:list={["testimonials-featured__layout", { "testimonials-featured__layout--centered": isCentered }]}>
+      {/* Featured review */}
+      <article class="testimonials-featured__hero effect-shadow-depth animate-fade-up" aria-label={`Featured review by ${featured.name}`}>
+        <div class="testimonials-featured__quote-svg" aria-hidden="true">
+          <svg width="72" height="72" viewBox="0 0 64 64" fill="currentColor" opacity="0.12">
+            <path d="M14 34.5c0-7.5 5-14.5 13-19l2.5 4C24 23 21 27.5 20.5 32H28v14H14V34.5zm22 0c0-7.5 5-14.5 13-19l2.5 4C46 23 43 27.5 42.5 32H50v14H36V34.5z" />
+          </svg>
+        </div>
+
+        <div class="testimonials-featured__hero-stars" role="img" aria-label={`${featured.rating} out of 5 stars`}>
+          {Array.from({ length: 5 }).map((_, s) => (
+            <svg
+              class={`testimonials-featured__star ${s < featured.rating ? "testimonials-featured__star--filled" : ""}`}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill={s < featured.rating ? "currentColor" : "none"}
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          ))}
+        </div>
+
+        <blockquote class="testimonials-featured__hero-text">
+          <p>{featured.text}</p>
+        </blockquote>
+
+        <footer class="testimonials-featured__hero-footer">
+          <cite class="testimonials-featured__hero-name">{featured.name}</cite>
+          {featured.service && (
+            <span class="testimonials-featured__hero-service">{featured.service}</span>
+          )}
+        </footer>
+      </article>
+
+      {/* Other reviews grid */}
+      <div class:list={["testimonials-featured__grid", "animate-stagger", { "testimonials-featured__grid--centered": isCentered }]}>
+        {others.map((review, i) => (
+          <article class="testimonials-featured__card animate-fade-up" style={`--stagger-index: ${i}`} aria-label={`Review by ${review.name}`}>
+            <div class="testimonials-featured__card-stars" role="img" aria-label={`${review.rating} out of 5 stars`}>
+              {Array.from({ length: 5 }).map((_, s) => (
+                <svg
+                  class={`testimonials-featured__star ${s < review.rating ? "testimonials-featured__star--filled" : ""}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill={s < review.rating ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+            <blockquote class="testimonials-featured__card-text">
+              <p>{review.text}</p>
+            </blockquote>
+            <footer class="testimonials-featured__card-footer">
+              <cite class="testimonials-featured__card-name">{review.name}</cite>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-featured {
+    background: var(--color-background);
+  }
+
+  .testimonials-featured__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .testimonials-featured__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials-featured__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  /* Default layout: featured left, grid right */
+  .testimonials-featured__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* Centered layout: featured full-width top, row below */
+  .testimonials-featured__layout--centered {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Featured hero card */
+  .testimonials-featured__hero {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow: hidden;
+  }
+
+  .testimonials-featured__quote-svg {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    color: var(--color-primary);
+    pointer-events: none;
+  }
+
+  .testimonials-featured__hero-stars {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .testimonials-featured__star--filled {
+    color: var(--color-accent, #f59e0b);
+  }
+
+  .testimonials-featured__star:not(.testimonials-featured__star--filled) {
+    color: var(--color-border);
+  }
+
+  .testimonials-featured__hero-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--color-text);
+  }
+
+  .testimonials-featured__hero-text p {
+    margin: 0;
+  }
+
+  .testimonials-featured__hero-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .testimonials-featured__hero-name {
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .testimonials-featured__hero-service {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    background: var(--color-primary-light, color-mix(in srgb, var(--color-primary) 10%, transparent));
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  /* Smaller cards grid */
+  .testimonials-featured__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .testimonials-featured__grid--centered {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .testimonials-featured__card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .testimonials-featured__card-stars {
+    display: flex;
+    gap: 0.1rem;
+  }
+
+  .testimonials-featured__card-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .testimonials-featured__card-text p {
+    margin: 0;
+  }
+
+  .testimonials-featured__card-footer {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .testimonials-featured__card-name {
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 900px) {
+    .testimonials-featured__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-featured__grid--centered {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .testimonials-featured__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-featured__grid--centered {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-featured__hero {
+      padding: 1.5rem;
+    }
+  }
+</style>

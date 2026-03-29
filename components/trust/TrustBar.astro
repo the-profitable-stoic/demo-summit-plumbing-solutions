@@ -1,0 +1,221 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const info = siteConfig.content.companyInfo;
+const biz = siteConfig.business;
+const variant = getVariant("trust");
+const glassActive = hasEffect("glass");
+
+const badges = [
+  {
+    label: "Licensed & Insured",
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  },
+  {
+    label: "5-Star Rated",
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+  },
+  {
+    label: `Locally Owned in ${biz.city}`,
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  },
+  {
+    label: `${info.yearsInBusiness}+ Years Experience`,
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  },
+];
+
+const stats = [
+  { value: info.yearsInBusiness, suffix: "+", label: "Years in Business" },
+  { value: info.projectsCompleted, suffix: "", label: "Projects Completed" },
+  { value: info.satisfaction, suffix: "", label: "Satisfaction Rate" },
+  { value: info.teamSize, suffix: "", label: "Team Members" },
+];
+---
+
+<section class:list={["trust-bar", { "effect-glass": glassActive }]} aria-label="Trust signals and credentials">
+  <div class="trust-bar__container">
+    {variant === "badges" ? (
+      <div class="trust-bar__badges animate-stagger" role="list">
+        {badges.map((badge) => (
+          <div class="trust-bar__badge animate-fade-up" role="listitem">
+            <span class="trust-bar__badge-icon" aria-hidden="true" set:html={badge.icon} />
+            <span class="trust-bar__badge-label">{badge.label}</span>
+          </div>
+        ))}
+      </div>
+    ) : variant === "minimal" ? (
+      <div class="trust-bar__minimal animate-fade-in" role="list">
+        {stats.map((stat, i) => (
+          <div class="trust-bar__minimal-item" role="listitem">
+            <span class="trust-bar__minimal-value">{stat.value}{stat.suffix}</span>
+            <span class="trust-bar__minimal-label">{stat.label}</span>
+            {i < stats.length - 1 && <span class="trust-bar__divider" aria-hidden="true" />}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="trust-bar__stats animate-stagger" role="list">
+        {stats.map((stat) => (
+          <div class="trust-bar__stat animate-fade-up" role="listitem">
+            <span class="trust-bar__stat-value">
+              <span class="stat-counter" style={`--stat-target: ${parseInt(String(stat.value))}`}></span>{stat.suffix}
+            </span>
+            <span class="trust-bar__stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .trust-bar {
+    background: var(--color-surface, var(--color-background-alt));
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1.5rem 1rem;
+  }
+
+  .trust-bar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Stats variant */
+  .trust-bar__stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-bar__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  .trust-bar__stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  .trust-bar__stat-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Badges variant */
+  .trust-bar__badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-bar__badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .trust-bar__badge-icon {
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .trust-bar__badge-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  /* Minimal variant */
+  .trust-bar__minimal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .trust-bar__minimal-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+  }
+
+  .trust-bar__minimal-value {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+
+  .trust-bar__minimal-label {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+  }
+
+  .trust-bar__divider {
+    width: 1px;
+    height: 24px;
+    background: var(--color-border);
+    margin-left: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .trust-bar__stats {
+      gap: 1.5rem;
+    }
+
+    .trust-bar__badges {
+      gap: 1.5rem;
+    }
+
+    .trust-bar__minimal {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .trust-bar__minimal-item {
+      padding: 0;
+    }
+
+    .trust-bar__divider {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .trust-bar__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .trust-bar__badges {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

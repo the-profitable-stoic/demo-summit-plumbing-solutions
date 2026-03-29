@@ -1,0 +1,327 @@
+---
+/**
+ * Homepage — dynamically assembles sections based on the design preset.
+ * Supports: variant system, effects, color strategies, section ordering.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig, getVariant, hasEffect, isColorStrategy } from "../lib/site-config";
+import { getSeoForPage, generateLocalBusinessJsonLd } from "../lib/seo";
+
+// -- Nav (5 variants)
+import StickyMinimal from "../../components/nav/StickyMinimal.astro";
+import TransparentOverlay from "../../components/nav/TransparentOverlay.astro";
+import CenteredLogo from "../../components/nav/CenteredLogo.astro";
+import SidebarDrawer from "../../components/nav/SidebarDrawer.astro";
+import NavScrollAware from "../../components/nav/NavScrollAware.astro";
+// -- Hero (10 variants)
+import DarkBold from "../../components/hero/DarkBold.astro";
+import SplitImage from "../../components/hero/SplitImage.astro";
+import GradientOverlay from "../../components/hero/GradientOverlay.astro";
+import AnimatedText from "../../components/hero/AnimatedText.astro";
+import MinimalClean from "../../components/hero/MinimalClean.astro";
+import ParallaxDepth from "../../components/hero/ParallaxDepth.astro";
+import HeroOverlap from "../../components/hero/HeroOverlap.astro";
+import HeroDiagonal from "../../components/hero/HeroDiagonal.astro";
+import HeroTextFocus from "../../components/hero/HeroTextFocus.astro";
+import HeroVideoFrame from "../../components/hero/HeroVideoFrame.astro";
+// -- Services (8 variants)
+import CardGrid from "../../components/services/CardGrid.astro";
+import IconList from "../../components/services/IconList.astro";
+import TabbedShowcase from "../../components/services/TabbedShowcase.astro";
+import AccordionDetail from "../../components/services/AccordionDetail.astro";
+import ServicesBento from "../../components/services/ServicesBento.astro";
+import ServicesTimeline from "../../components/services/ServicesTimeline.astro";
+import ServicesShowcase from "../../components/services/ServicesShowcase.astro";
+import ServicesCompact from "../../components/services/ServicesCompact.astro";
+// -- Testimonials (7 variants)
+import GridCards from "../../components/testimonials/GridCards.astro";
+import CarouselSlider from "../../components/testimonials/CarouselSlider.astro";
+import LargeQuote from "../../components/testimonials/LargeQuote.astro";
+import MasonryWall from "../../components/testimonials/MasonryWall.astro";
+import TestimonialsMarquee from "../../components/testimonials/TestimonialsMarquee.astro";
+import TestimonialsStack from "../../components/testimonials/TestimonialsStack.astro";
+import TestimonialsFeatured from "../../components/testimonials/TestimonialsFeatured.astro";
+// -- CTA (6 variants)
+import BannerWide from "../../components/cta/BannerWide.astro";
+import SplitAction from "../../components/cta/SplitAction.astro";
+import FloatingCard from "../../components/cta/FloatingCard.astro";
+import InlineSubtle from "../../components/cta/InlineSubtle.astro";
+import CtaSplit from "../../components/cta/CtaSplit.astro";
+import CtaFloatingBar from "../../components/cta/CtaFloatingBar.astro";
+// -- Gallery (3 variants)
+import MasonryGrid from "../../components/gallery/MasonryGrid.astro";
+import LightboxGrid from "../../components/gallery/LightboxGrid.astro";
+import BeforeAfter from "../../components/gallery/BeforeAfter.astro";
+// -- Contact (3 variants)
+import SplitFormMap from "../../components/contact/SplitFormMap.astro";
+import FullWidthForm from "../../components/contact/FullWidthForm.astro";
+import SidebarForm from "../../components/contact/SidebarForm.astro";
+// -- Footer (6 variants)
+import MultiColumn from "../../components/footer/MultiColumn.astro";
+import MinimalCleanFooter from "../../components/footer/MinimalClean.astro";
+import MegaFooter from "../../components/footer/MegaFooter.astro";
+import CenteredStack from "../../components/footer/CenteredStack.astro";
+import FooterCta from "../../components/footer/FooterCta.astro";
+import FooterColumns from "../../components/footer/FooterColumns.astro";
+// -- Trust (2 variants)
+import TrustBar from "../../components/trust/TrustBar.astro";
+import TrustBanner from "../../components/trust/TrustBanner.astro";
+
+const seo = getSeoForPage("homepage");
+const components = siteConfig.design.components;
+const about = siteConfig.content.homepage;
+const biz = siteConfig.business;
+const info = siteConfig.content.companyInfo;
+const aboutImage = siteConfig.images.about;
+const colorStrategy = siteConfig.design.colorStrategy || "default";
+const sectionOrder = siteConfig.design.sectionOrder || [
+  "hero", "trust", "about", "valueProps", "services", "cta", "testimonials", "gallery", "contact"
+];
+
+// Component name → component registries
+const navMap: Record<string, any> = {
+  StickyMinimal, TransparentOverlay, CenteredLogo, SidebarDrawer, NavScrollAware,
+};
+const heroMap: Record<string, any> = {
+  DarkBold, SplitImage, GradientOverlay, AnimatedText, MinimalClean, ParallaxDepth,
+  HeroOverlap, HeroDiagonal, HeroTextFocus, HeroVideoFrame,
+};
+const servicesMap: Record<string, any> = {
+  CardGrid, IconList, TabbedShowcase, AccordionDetail,
+  ServicesBento, ServicesTimeline, ServicesShowcase, ServicesCompact,
+};
+const testimonialsMap: Record<string, any> = {
+  GridCards, CarouselSlider, LargeQuote, MasonryWall,
+  TestimonialsMarquee, TestimonialsStack, TestimonialsFeatured,
+};
+const ctaMap: Record<string, any> = {
+  BannerWide, SplitAction, FloatingCard, InlineSubtle, CtaSplit, CtaFloatingBar,
+};
+const galleryMap: Record<string, any> = {
+  MasonryGrid, LightboxGrid, BeforeAfter,
+};
+const contactMap: Record<string, any> = {
+  SplitFormMap, FullWidthForm, SidebarForm,
+};
+const footerMap: Record<string, any> = {
+  MultiColumn, MinimalClean: MinimalCleanFooter, MegaFooter, CenteredStack, FooterCta, FooterColumns,
+};
+const trustMap: Record<string, any> = {
+  TrustBar, TrustBanner,
+};
+
+// Resolve components — handle both old string format and new {name, variant} format
+function resolveName(comp: any): string {
+  return typeof comp === "object" ? comp.name : comp;
+}
+
+const Nav = navMap[resolveName(components.nav)] || StickyMinimal;
+const Hero = heroMap[resolveName(components.hero)] || DarkBold;
+const Services = servicesMap[resolveName(components.services)] || CardGrid;
+const Testimonials = testimonialsMap[resolveName(components.testimonials)] || GridCards;
+const Cta = ctaMap[resolveName(components.cta)] || BannerWide;
+const Gallery = galleryMap[resolveName(components.gallery)] || MasonryGrid;
+const Contact = contactMap[resolveName(components.contact)] || SplitFormMap;
+const Footer = footerMap[resolveName(components.footer)] || MultiColumn;
+const Trust = trustMap[resolveName(components.trust)] || TrustBar;
+
+// Section alternation
+const alternation = siteConfig.design.preset.sections.sectionAlternation || [];
+function sectionClass(index: number): string {
+  const bg = alternation[index % alternation.length] || "light";
+  return `section-${bg}`;
+}
+
+// Build section map for ordering
+const sectionComponents: Record<string, any> = {
+  hero: null, // hero handled specially
+  trust: Trust,
+  about: null, // inline section
+  valueProps: null, // inline section
+  services: Services,
+  cta: Cta,
+  testimonials: Testimonials,
+  gallery: Gallery,
+  contact: Contact,
+};
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+>
+  <Nav slot="nav" />
+
+  {sectionOrder.map((section, idx) => {
+    if (section === "hero") {
+      return <Hero />;
+    }
+    if (section === "trust") {
+      return <Trust />;
+    }
+    if (section === "about") {
+      return (
+        <section class={`about-section section-padding ${sectionClass(idx)}`} id="about">
+          <div class="container">
+            <div class="about-grid">
+              <div class="about-content animate-slide-left">
+                <h2 class="about-heading">{about.aboutTitle || `About ${biz.name}`}</h2>
+                {about.aboutText.map((p) => (
+                  <p class="about-text">{p}</p>
+                ))}
+                <div class="about-stats">
+                  <div class="about-stat">
+                    <span class="about-stat-value">{info.yearsInBusiness}+</span>
+                    <span class="about-stat-label">Years Experience</span>
+                  </div>
+                  <div class="about-stat">
+                    <span class="about-stat-value">{info.projectsCompleted}</span>
+                    <span class="about-stat-label">Projects Done</span>
+                  </div>
+                  <div class="about-stat">
+                    <span class="about-stat-value">{info.satisfaction}</span>
+                    <span class="about-stat-label">Satisfaction</span>
+                  </div>
+                </div>
+              </div>
+              <div class="about-image-wrap animate-slide-right">
+                {aboutImage && (
+                  <img src={aboutImage} alt={`${biz.name} team`} class="about-image" loading="lazy" />
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+    if (section === "valueProps") {
+      return about.valueProps && about.valueProps.length > 0 ? (
+        <section class={`value-props section-padding ${sectionClass(idx)}`}>
+          <div class="container">
+            <h2 class="section-heading animate-fade-up">Why Choose {biz.name}</h2>
+            <div class="props-grid animate-stagger">
+              {about.valueProps.map((prop) => (
+                <div class={`prop-card ${hasEffect("hover-lift") ? "effect-hover-lift" : ""} ${hasEffect("shadow-depth") ? "effect-shadow-depth" : ""}`}>
+                  <h3 class="prop-title">{prop.title}</h3>
+                  <p class="prop-desc">{prop.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null;
+    }
+    if (section === "services") {
+      return <div class={sectionClass(idx)}><Services /></div>;
+    }
+    if (section === "cta") {
+      return <Cta />;
+    }
+    if (section === "testimonials") {
+      return <div class={sectionClass(idx)}><Testimonials /></div>;
+    }
+    if (section === "gallery") {
+      return <div class={sectionClass(idx)}><Gallery /></div>;
+    }
+    if (section === "contact") {
+      return <Contact />;
+    }
+    return null;
+  })}
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* About Section */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-heading {
+    margin-bottom: 1.5rem;
+  }
+  .about-text {
+    color: var(--color-text-light);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .about-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .about-stat-value {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    line-height: 1.2;
+  }
+  .about-stat-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--color-text-light);
+    margin-top: 0.15rem;
+  }
+  .about-image-wrap {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+  .about-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Value Props */
+  .section-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+  .prop-card {
+    padding: 2rem;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .prop-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-text);
+  }
+  .prop-desc {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1023px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .about-image-wrap { order: -1; }
+  }
+
+  @media (max-width: 640px) {
+    .about-stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>

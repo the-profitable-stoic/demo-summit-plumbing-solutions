@@ -1,0 +1,225 @@
+---
+import { siteConfig } from "../../lib/site-config";
+
+const reviews = siteConfig.content.reviews;
+const businessName = siteConfig.business.name;
+
+function formatDate(dateStr: string): string {
+  try {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
+---
+
+<section class="testimonials section-padding section-surface" aria-labelledby="testimonials-heading">
+  <div class="testimonials__container">
+    <div class="testimonials__header animate-fade-up">
+      <h2 id="testimonials-heading" class="testimonials__title">What Our Clients Say</h2>
+      <p class="testimonials__intro">
+        Real feedback from homeowners and businesses who trust {businessName} to get the job done right.
+      </p>
+    </div>
+
+    <div class="testimonials__grid animate-stagger">
+      {reviews.map((review) => (
+        <article class="review-card animate-fade-up" aria-label={`Review by ${review.name}`}>
+          <div class="review-card__quote-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 7.5H7.5C5.567 7.5 4 9.067 4 11v0c0 1.933 1.567 3.5 3.5 3.5H9c.552 0 1 .448 1 1v1c0 1.933-1.567 3.5-3.5 3.5H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M20 7.5h-3.5C14.567 7.5 13 9.067 13 11v0c0 1.933 1.567 3.5 3.5 3.5H18c.552 0 1 .448 1 1v1c0 1.933-1.567 3.5-3.5 3.5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+
+          <div class="review-card__stars" role="img" aria-label={`${review.rating} out of 5 stars`}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg
+                class={`review-card__star ${i < review.rating ? "review-card__star--filled" : "review-card__star--empty"}`}
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"
+                  fill={i < review.rating ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            ))}
+          </div>
+
+          <blockquote class="review-card__text">
+            <p>&ldquo;{review.text}&rdquo;</p>
+          </blockquote>
+
+          <footer class="review-card__footer">
+            <div class="review-card__author">
+              <span class="review-card__name">{review.name}</span>
+              {review.service && (
+                <span class="review-card__service">{review.service}</span>
+              )}
+            </div>
+            {review.date && (
+              <time class="review-card__date" datetime={review.date}>
+                {formatDate(review.date)}
+              </time>
+            )}
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: var(--section-padding);
+    background: var(--color-backgroundAlt);
+  }
+
+  .testimonials__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .testimonials__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .testimonials__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0 0 1rem;
+    line-height: 1.15;
+  }
+
+  .testimonials__intro {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.175rem);
+    color: inherit; opacity: 0.7;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .review-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .review-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  }
+
+  .review-card__quote-icon {
+    color: var(--color-primaryLight);
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+    line-height: 1;
+  }
+
+  .review-card__stars {
+    display: flex;
+    gap: 0.15rem;
+    margin-bottom: 1rem;
+  }
+
+  .review-card__star--filled {
+    color: var(--color-accent);
+  }
+
+  .review-card__star--empty {
+    color: var(--color-border);
+  }
+
+  .review-card__text {
+    margin: 0 0 1.5rem;
+    flex: 1;
+  }
+
+  .review-card__text p {
+    font-family: var(--font-body);
+    font-size: 0.975rem;
+    color: inherit;
+    line-height: 1.72;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .review-card__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .review-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .review-card__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 0.95rem;
+    color: inherit;
+    line-height: 1.3;
+  }
+
+  .review-card__service {
+    font-family: var(--font-body);
+    font-size: 0.825rem;
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  .review-card__date {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: inherit; opacity: 0.7;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

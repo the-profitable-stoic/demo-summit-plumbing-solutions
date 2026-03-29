@@ -1,0 +1,231 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const reviews = siteConfig.content.reviews;
+---
+
+<section class="masonry-testimonials section-padding">
+  <div class="container">
+    <div class="masonry-header animate-fade-up">
+      <p class="masonry-label">Reviews</p>
+      <h2 class="masonry-title">Hear From Our Clients</h2>
+      <p class="masonry-subtitle">
+        Real feedback from homeowners and businesses we've had the privilege of serving.
+      </p>
+    </div>
+
+    <div class="masonry-wall animate-fade-in">
+      {reviews.map((review, i) => (
+        <article class="masonry-card animate-fade-up animate-stagger" style={`--stagger-index: ${i}`}>
+          <div class="masonry-card-accent" aria-hidden="true" />
+
+          <div class="masonry-card-stars" aria-label={`${review.rating} out of 5 stars`}>
+            {Array.from({ length: 5 }).map((_, s) => (
+              <svg
+                class={`masonry-card-star ${s < review.rating ? 'masonry-card-star--filled' : ''}`}
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill={s < review.rating ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            ))}
+          </div>
+
+          <blockquote class="masonry-card-text">
+            <p>{review.text}</p>
+          </blockquote>
+
+          <footer class="masonry-card-footer">
+            <div class="masonry-card-avatar" aria-hidden="true">
+              {review.name.charAt(0).toUpperCase()}
+            </div>
+            <div class="masonry-card-info">
+              <cite class="masonry-card-name">{review.name}</cite>
+              {review.service && (
+                <span class="masonry-card-service">{review.service}</span>
+              )}
+            </div>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .masonry-testimonials {
+    background: var(--color-background);
+  }
+
+  .masonry-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .masonry-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  .masonry-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0 0 0.75rem;
+    line-height: 1.15;
+  }
+
+  .masonry-subtitle {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: inherit; opacity: 0.7;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Masonry layout via column-count */
+  .masonry-wall {
+    column-count: 1;
+    column-gap: 1.25rem;
+  }
+
+  .masonry-card {
+    break-inside: avoid;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .masonry-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Top accent bar */
+  .masonry-card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+  }
+
+  .masonry-card-stars {
+    display: flex;
+    gap: 0.15rem;
+    padding-top: 0.25rem;
+  }
+
+  .masonry-card-star {
+    color: inherit; opacity: 0.7;
+    opacity: 0.25;
+  }
+
+  .masonry-card-star--filled {
+    color: var(--color-accent);
+    opacity: 1;
+  }
+
+  .masonry-card-text {
+    margin: 0;
+    flex: 1;
+  }
+
+  .masonry-card-text p {
+    font-family: var(--font-body);
+    font-size: 0.925rem;
+    color: inherit;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .masonry-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .masonry-card-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-primaryLight);
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .masonry-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .masonry-card-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 0.9rem;
+    color: inherit;
+    font-style: normal;
+    line-height: 1.3;
+  }
+
+  .masonry-card-service {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: inherit; opacity: 0.7;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Responsive columns */
+  @media (min-width: 640px) {
+    .masonry-wall {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry-wall {
+      column-count: 3;
+      column-gap: 1.5rem;
+    }
+
+    .masonry-card {
+      margin-bottom: 1.5rem;
+      padding: 1.75rem;
+    }
+  }
+</style>

@@ -1,0 +1,350 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const { heroHeadline, heroSubline } = siteConfig.content.homepage;
+const biz = siteConfig.business;
+const heroImage = siteConfig.images.hero;
+const info = siteConfig.content.companyInfo;
+const variant = getVariant("hero");
+const useGradientMesh = hasEffect("gradient-mesh");
+---
+
+<section class={`hero-video-frame ${useGradientMesh ? "effect-gradient-mesh" : ""}`} data-variant={variant} aria-label="Hero">
+  <div class="hvf__container">
+    {/* Top content stack */}
+    <div class="hvf__content">
+      <span class="hvf__label animate-fade-in">{biz.category} &bull; {biz.city}, {biz.state}</span>
+      <h1 class="hvf__headline animate-fade-up">{heroHeadline}</h1>
+      <p class="hvf__subline animate-fade-up">{heroSubline}</p>
+
+      <div class="hvf__actions animate-fade-up">
+        <a href="/contact" class="btn-primary hvf__cta">
+          Get Free Estimate
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-secondary hvf__call">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          {biz.phone}
+        </a>
+      </div>
+    </div>
+
+    {/* Framed image — video player style */}
+    <div class="hvf__frame-wrapper animate-scale-fade-up">
+      <div class="hvf__frame">
+        {heroImage && (
+          <img src={heroImage} alt={`${biz.category} services in ${biz.city}, ${biz.state}`} class="hvf__image" loading="eager" />
+        )}
+
+        {/* Decorative play button */}
+        <div class="hvf__play-overlay" aria-hidden="true">
+          <div class="hvf__play-btn">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+
+        {/* Top bar decoration — mimics video controls */}
+        <div class="hvf__frame-bar" aria-hidden="true">
+          <span class="hvf__frame-dot"></span>
+          <span class="hvf__frame-dot"></span>
+          <span class="hvf__frame-dot"></span>
+        </div>
+      </div>
+    </div>
+
+    {/* Trust stats row */}
+    <div class="hvf__stats animate-fade-up">
+      <div class="hvf__stat">
+        <span class="hvf__stat-value">{info.yearsInBusiness}+</span>
+        <span class="hvf__stat-label">Years Experience</span>
+      </div>
+      <div class="hvf__stat-divider" aria-hidden="true"></div>
+      <div class="hvf__stat">
+        <span class="hvf__stat-value">{info.projectsCompleted}</span>
+        <span class="hvf__stat-label">Projects Done</span>
+      </div>
+      <div class="hvf__stat-divider" aria-hidden="true"></div>
+      <div class="hvf__stat">
+        <span class="hvf__stat-value">{info.satisfaction}</span>
+        <span class="hvf__stat-label">Satisfaction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-video-frame {
+    position: relative;
+    background: var(--color-background);
+    padding: clamp(5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .hvf__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* Content — centered stack */
+  .hvf__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 720px;
+  }
+
+  .hvf__label {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+  }
+
+  .hvf__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .hvf__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin: 0;
+    max-width: 580px;
+  }
+
+  .hvf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .hvf__cta {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hvf__call {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Frame wrapper */
+  .hvf__frame-wrapper {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .hvf__frame {
+    position: relative;
+    border-radius: calc(var(--radius-card) * 1.5);
+    overflow: hidden;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.08),
+      0 20px 40px -8px rgba(0, 0, 0, 0.12),
+      0 0 0 1px var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .hvf__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Decorative play button */
+  .hvf__play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .hvf__frame:hover .hvf__play-overlay {
+    opacity: 1;
+  }
+
+  .hvf__play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding-left: 4px;
+  }
+
+  /* Top bar — browser/video chrome */
+  .hvf__frame-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1rem;
+    display: flex;
+    gap: 0.4rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  }
+
+  .hvf__frame-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .hvf__frame-dot:first-child { background: rgba(255, 99, 99, 0.7); }
+  .hvf__frame-dot:nth-child(2) { background: rgba(255, 199, 59, 0.7); }
+  .hvf__frame-dot:nth-child(3) { background: rgba(59, 220, 99, 0.7); }
+
+  /* Stats row */
+  .hvf__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .hvf__stat {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .hvf__stat-value {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .hvf__stat-label {
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .hvf__stat-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--color-border);
+  }
+
+  /* Wide variant — full-width frame */
+  .hero-video-frame[data-variant="wide"] .hvf__frame-wrapper {
+    max-width: 100%;
+  }
+
+  .hero-video-frame[data-variant="wide"] .hvf__frame {
+    border-radius: var(--radius-card);
+  }
+
+  .hero-video-frame[data-variant="wide"] .hvf__image {
+    aspect-ratio: 21 / 9;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-video-frame {
+      padding: clamp(4rem, 8vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+    }
+
+    .hvf__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hvf__cta,
+    .hvf__call {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hvf__frame {
+      border-radius: var(--radius-card);
+    }
+
+    .hvf__image {
+      aspect-ratio: 4 / 3;
+    }
+
+    .hero-video-frame[data-variant="wide"] .hvf__image {
+      aspect-ratio: 16 / 9;
+    }
+
+    .hvf__play-btn {
+      width: 52px;
+      height: 52px;
+    }
+
+    .hvf__play-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .hvf__stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hvf__stat-divider {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hvf__container {
+      padding: 0 1.25rem;
+    }
+
+    .hvf__frame-bar {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .hvf__frame-dot {
+      width: 8px;
+      height: 8px;
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../lib/site-config";
+import { getSeoForPage } from "../lib/seo";
+import StickyMinimal from "../../components/nav/StickyMinimal.astro";
+import GridCards from "../../components/testimonials/GridCards.astro";
+import MultiColumn from "../../components/footer/MultiColumn.astro";
+
+const biz = siteConfig.business;
+const reviews = siteConfig.content.reviews;
+const seo = getSeoForPage("reviews");
+const avgRating = reviews.length > 0
+  ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+  : "5.0";
+---
+
+<BaseLayout
+  title={seo.title || `Reviews | ${biz.name}`}
+  description={seo.description || `Read ${reviews.length}+ reviews from ${biz.name} customers. ${avgRating}/5 average rating. ${biz.category} in ${biz.city}, ${biz.state}.`}
+>
+  <StickyMinimal slot="nav" />
+
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Client Reviews</h1>
+      <p class="hero-sub animate-fade-up">{avgRating}/5 average rating from {reviews.length}+ happy clients</p>
+    </div>
+  </section>
+
+  <GridCards />
+
+  <MultiColumn slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { padding: 8rem 0 3rem; background: var(--color-backgroundAlt); color: var(--color-textOnDark); }
+  .page-hero h1 { margin-bottom: 0.5rem; }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 1.1rem; }
+</style>

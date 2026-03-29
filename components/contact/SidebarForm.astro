@@ -1,0 +1,281 @@
+---
+import { siteConfig } from '../../lib/site-config';
+
+const { name, phone, city, state } = siteConfig.business;
+const services = siteConfig.content.services || [];
+const phoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+---
+
+<section class="sidebar-form section-padding" aria-label="Contact form">
+  <div class="container">
+    <div class="sidebar-form__layout">
+      <aside class="sidebar-form__sidebar animate-slide-left">
+        <div class="sidebar-form__card">
+          <h3 class="sidebar-form__card-title">{name}</h3>
+
+          <div class="sidebar-form__card-item">
+            <svg class="sidebar-form__card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div>
+              <span class="sidebar-form__card-label">Phone</span>
+              <a href={phoneHref} class="sidebar-form__card-value sidebar-form__card-link">{phone}</a>
+            </div>
+          </div>
+
+          <div class="sidebar-form__card-item">
+            <svg class="sidebar-form__card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>
+              <span class="sidebar-form__card-label">Hours</span>
+              <span class="sidebar-form__card-value">Mon - Fri: 8am - 6pm</span>
+              <span class="sidebar-form__card-value">Sat: 9am - 2pm</span>
+            </div>
+          </div>
+
+          <div class="sidebar-form__card-item">
+            <svg class="sidebar-form__card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <span class="sidebar-form__card-label">Location</span>
+              <span class="sidebar-form__card-value">{city}, {state}</span>
+            </div>
+          </div>
+
+          <div class="sidebar-form__card-cta">
+            <a href={phoneHref} class="btn-primary sidebar-form__card-btn">Call Now</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-form__main animate-slide-right">
+        <h2 class="sidebar-form__title">Get Your Free Estimate</h2>
+        <p class="sidebar-form__subtitle">Fill out the form and we'll be in touch shortly.</p>
+
+        <form class="sidebar-form__form" action="/api/contact" method="POST">
+          <div class="sidebar-form__field">
+            <label for="sb-name" class="sidebar-form__label">Full Name *</label>
+            <input type="text" id="sb-name" name="name" required placeholder="Your full name" class="sidebar-form__input" />
+          </div>
+
+          <div class="sidebar-form__field">
+            <label for="sb-email" class="sidebar-form__label">Email Address *</label>
+            <input type="email" id="sb-email" name="email" required placeholder="your@email.com" class="sidebar-form__input" />
+          </div>
+
+          <div class="sidebar-form__field">
+            <label for="sb-phone" class="sidebar-form__label">Phone Number</label>
+            <input type="tel" id="sb-phone" name="phone" placeholder="(555) 123-4567" class="sidebar-form__input" />
+          </div>
+
+          <div class="sidebar-form__field">
+            <label for="sb-service" class="sidebar-form__label">Service Interested In</label>
+            <select id="sb-service" name="service" class="sidebar-form__input sidebar-form__select">
+              <option value="">Choose a service...</option>
+              {services.map((s) => (
+                <option value={s.slug}>{s.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="sidebar-form__field">
+            <label for="sb-message" class="sidebar-form__label">Project Details</label>
+            <textarea id="sb-message" name="message" rows="4" placeholder="Tell us about your project..." class="sidebar-form__input sidebar-form__textarea"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary sidebar-form__submit">Get My Free Estimate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sidebar-form {
+    background: var(--color-background);
+  }
+
+  .sidebar-form__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .sidebar-form__sidebar {
+    order: 2;
+  }
+
+  .sidebar-form__main {
+    order: 1;
+  }
+
+  .sidebar-form__card {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .sidebar-form__card-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.25rem;
+    color: inherit;
+    margin: 0 0 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .sidebar-form__card-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sidebar-form__card-icon {
+    flex-shrink: 0;
+    color: var(--color-primary);
+    margin-top: 0.1rem;
+  }
+
+  .sidebar-form__card-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: inherit; opacity: 0.7;
+    margin-bottom: 0.15rem;
+  }
+
+  .sidebar-form__card-value {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: inherit;
+  }
+
+  .sidebar-form__card-link {
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .sidebar-form__card-link:hover {
+    color: var(--color-primary);
+  }
+
+  .sidebar-form__card-cta {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sidebar-form__card-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-button);
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sidebar-form__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    color: inherit;
+    margin: 0 0 0.5rem;
+  }
+
+  .sidebar-form__subtitle {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: inherit; opacity: 0.7;
+    margin: 0 0 2rem;
+  }
+
+  .sidebar-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .sidebar-form__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: inherit;
+    margin-bottom: 0.35rem;
+  }
+
+  .sidebar-form__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .sidebar-form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.1);
+  }
+
+  .sidebar-form__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .sidebar-form__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .sidebar-form__submit {
+    align-self: flex-start;
+    padding: 0.875rem 2.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-button);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .sidebar-form__submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (min-width: 768px) {
+    .sidebar-form__layout {
+      grid-template-columns: 280px 1fr;
+      gap: 2.5rem;
+    }
+
+    .sidebar-form__sidebar {
+      order: 1;
+    }
+
+    .sidebar-form__main {
+      order: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .sidebar-form__layout {
+      grid-template-columns: 320px 1fr;
+      gap: 3.5rem;
+    }
+  }
+</style>

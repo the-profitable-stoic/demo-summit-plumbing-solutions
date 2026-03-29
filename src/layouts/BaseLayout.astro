@@ -1,0 +1,65 @@
+---
+import "../styles/global.css";
+import { siteConfig } from "../lib/site-config";
+import { generateLocalBusinessJsonLd } from "../lib/seo";
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  canonical?: string;
+  jsonLd?: string;
+}
+
+const {
+  title,
+  description,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  canonical,
+  jsonLd,
+} = Astro.props;
+
+const biz = siteConfig.business;
+const preset = siteConfig.design.preset;
+const colorStrategy = siteConfig.design.colorStrategy || "default";
+
+const fonts = [preset.typography.headingFont, preset.typography.bodyFont]
+  .filter((f, i, arr) => arr.indexOf(f) === i)
+  .map((f) => f.replace(/\s+/g, "+"))
+  .join("&family=");
+const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fonts}:wght@400;500;600;700&display=swap`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={ogTitle || title} />
+    <meta property="og:description" content={ogDescription || description} />
+    <meta property="og:type" content="website" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={googleFontsUrl} />
+    <script type="application/ld+json" set:html={generateLocalBusinessJsonLd()} />
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body class={`color-${colorStrategy}`}>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <slot name="nav" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

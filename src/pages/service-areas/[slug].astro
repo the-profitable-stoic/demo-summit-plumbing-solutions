@@ -1,0 +1,306 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../lib/site-config";
+import { getSeoForPage, generateBreadcrumbJsonLd } from "../../lib/seo";
+import MultiColumn from "../../../components/footer/MultiColumn.astro";
+import StickyMinimal from "../../../components/nav/StickyMinimal.astro";
+
+export function getStaticPaths() {
+  return siteConfig.content.serviceAreas.map((area) => ({
+    params: { slug: area.slug },
+    props: { area },
+  }));
+}
+
+const { area } = Astro.props;
+const biz = siteConfig.business;
+const services = siteConfig.content.services;
+const allAreas = siteConfig.content.serviceAreas;
+const siteUrl = Astro.site?.href || "";
+
+const seo = getSeoForPage(`service-areas/${area.slug}`);
+const title = seo.title || `${biz.category} in ${area.city}, ${area.state} | ${biz.name}`;
+const description = seo.description || `Professional ${biz.category.toLowerCase()} services in ${area.city}, ${area.state}. Serving the local community with quality work. Call ${biz.phone}.`;
+
+const breadcrumbs = [
+  { name: "Home", url: siteUrl },
+  { name: "Service Areas", url: `${siteUrl}service-areas/` },
+  { name: area.city, url: `${siteUrl}service-areas/${area.slug}/` },
+];
+
+const jsonLd = [
+  generateBreadcrumbJsonLd(breadcrumbs),
+  JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: biz.name,
+    telephone: biz.phone,
+    areaServed: {
+      "@type": "City",
+      name: area.city,
+      addressRegion: area.state,
+    },
+  }),
+].join("");
+
+// Nearby areas for cross-linking (exclude self)
+const nearby = area.nearbyAreas?.length
+  ? allAreas.filter((a) => area.nearbyAreas.includes(a.city) && a.slug !== area.slug)
+  : allAreas.filter((a) => a.slug !== area.slug).slice(0, 6);
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <StickyMinimal slot="nav" />
+
+  <!-- Hero -->
+  <section class="area-hero">
+    <div class="area-hero-bg-gradient"></div>
+    <div class="container area-hero-content">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/service-areas">Service Areas</a>
+        <span class="sep">/</span>
+        <span aria-current="page">{area.city}</span>
+      </nav>
+      <h1 class="area-title animate-fade-up">
+        {biz.category} in {area.city}, {area.state}
+      </h1>
+      <p class="area-subtitle animate-fade-up">
+        Trusted local professionals serving {area.city} and surrounding communities
+      </p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section-padding section-light">
+    <div class="container area-layout">
+      <div class="area-main">
+        <!-- Local Content -->
+        <div class="area-content animate-fade-up">
+          <h2>Serving {area.city}, {area.state}</h2>
+          <p class="area-body">{area.content}</p>
+          {area.localContext && (
+            <p class="area-body area-context">{area.localContext}</p>
+          )}
+        </div>
+
+        <!-- Services Available -->
+        <section class="area-services animate-fade-up">
+          <h2>{biz.category} Services in {area.city}</h2>
+          <div class="services-grid">
+            {services.map((s) => (
+              <a href={`/services/${s.slug}`} class="area-service-card">
+                <h3>{s.name}</h3>
+                <p>{s.shortDescription}</p>
+                <span class="card-link">Learn more →</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="area-cta animate-fade-up">
+          <h2>Need {biz.category} in {area.city}?</h2>
+          <p>Contact us today for a free estimate. We provide professional, reliable service throughout {area.city} and the surrounding area.</p>
+          <div class="cta-actions">
+            <a href="/contact" class="btn-primary">Get a Free Estimate</a>
+            <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-secondary">Call {biz.phone}</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="area-sidebar">
+        <div class="sidebar-contact animate-fade-up">
+          <h3>Contact Us</h3>
+          <p class="sidebar-phone-display">{biz.phone}</p>
+          <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-primary sidebar-call-btn">Call Now</a>
+          <a href="/contact" class="sidebar-link">Or request a quote online →</a>
+        </div>
+
+        {nearby.length > 0 && (
+          <div class="sidebar-areas animate-fade-up">
+            <h3>Nearby Service Areas</h3>
+            <ul>
+              {nearby.map((n) => (
+                <li><a href={`/service-areas/${n.slug}`}>{n.city}, {n.state}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+
+  <MultiColumn slot="footer" />
+</BaseLayout>
+
+<style>
+  .area-hero {
+    position: relative;
+    padding: 8rem 0 3.5rem;
+    background: var(--color-backgroundAlt);
+    overflow: hidden;
+  }
+  .area-hero-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-backgroundAlt) 0%, color-mix(in srgb, var(--color-primary) 20%, var(--color-backgroundAlt)) 100%);
+  }
+  .area-hero-content { position: relative; z-index: 2; }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+  }
+  .breadcrumbs a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  .breadcrumbs a:hover { color: #fff; }
+  .sep { opacity: 0.3; }
+  .area-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-textOnDark);
+    margin-bottom: 0.5rem;
+  }
+  .area-subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .area-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .area-main h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .area-body {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--color-textLight);
+    margin-bottom: 1rem;
+  }
+  .area-context {
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-style: italic;
+  }
+
+  .area-services { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .area-service-card {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .area-service-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+  .area-service-card h3 {
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin-bottom: 0.4rem;
+  }
+  .area-service-card p {
+    font-size: 0.88rem;
+    color: var(--color-textLight);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .card-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .area-cta {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+  }
+  .area-cta p {
+    color: var(--color-textLight);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+  /* Sidebar */
+  .area-sidebar {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .sidebar-contact {
+    padding: 2rem;
+    background: var(--color-backgroundAlt);
+    color: var(--color-textOnDark);
+    border-radius: var(--radius-card);
+    text-align: center;
+  }
+  .sidebar-contact h3 { margin-bottom: 0.5rem; }
+  .sidebar-phone-display {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .sidebar-call-btn { width: 100%; justify-content: center; margin-bottom: 0.75rem; }
+  .sidebar-link {
+    display: block;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+  }
+  .sidebar-link:hover { color: #fff; }
+
+  .sidebar-areas {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+  .sidebar-areas h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+  .sidebar-areas ul { list-style: none; padding: 0; }
+  .sidebar-areas li { border-bottom: 1px solid var(--color-border); }
+  .sidebar-areas li:last-child { border-bottom: none; }
+  .sidebar-areas a {
+    display: block;
+    padding: 0.55rem 0;
+    font-size: 0.88rem;
+    color: var(--color-textLight);
+    text-decoration: none;
+  }
+  .sidebar-areas a:hover { color: var(--color-primary); }
+
+  @media (max-width: 1023px) {
+    .area-layout { grid-template-columns: 1fr; }
+    .area-sidebar { position: static; flex-direction: row; flex-wrap: wrap; }
+    .sidebar-contact, .sidebar-areas { flex: 1; min-width: 260px; }
+  }
+
+  @media (max-width: 640px) {
+    .cta-actions { flex-direction: column; }
+    .cta-actions .btn-primary, .cta-actions .btn-secondary { width: 100%; justify-content: center; }
+  }
+</style>

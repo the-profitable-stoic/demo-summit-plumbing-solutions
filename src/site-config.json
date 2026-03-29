@@ -1,0 +1,781 @@
+{
+  "business": {
+    "name": "Summit Plumbing Solutions",
+    "phone": "(303) 555-0142",
+    "category": "plumbing",
+    "city": "Denver",
+    "state": "CO"
+  },
+  "design": {
+    "preset": {
+      "effects": [
+        "hover-lift",
+        "dotgrid-bg",
+        "hover-glow"
+      ],
+      "layout": {
+        "heroAlignment": "left",
+        "contentWidth": "standard",
+        "gridStyle": "even"
+      },
+      "personality": {
+        "boldness": 0.4,
+        "animationIntensity": "moderate",
+        "spacingMultiplier": 1.15
+      },
+      "id": "home-services-bright-friendly",
+      "categoryGroup": "home-services",
+      "name": "Bright Friendly",
+      "colors": {
+        "primary": "#0891B2",
+        "primaryDark": "#155E75",
+        "primaryLight": "#A5F3FC",
+        "secondary": "#164E63",
+        "accent": "#06B6D4",
+        "background": "#FFFFFF",
+        "backgroundAlt": "#ECFEFF",
+        "surface": "#F0F9FF",
+        "text": "#0C4A6E",
+        "textLight": "#7DD3FC",
+        "textOnDark": "#F0F9FF",
+        "border": "#BAE6FD"
+      },
+      "typography": {
+        "headingFont": "Nunito",
+        "headingWeight": "800",
+        "bodyFont": "Merriweather",
+        "bodyWeight": "300",
+        "headingStyle": "normal",
+        "scale": "1.2"
+      },
+      "shape": {
+        "borderRadius": "12px",
+        "buttonRadius": "24px",
+        "cardRadius": "12px",
+        "shadowStyle": "soft"
+      },
+      "sections": {
+        "heroStyle": "light",
+        "sectionAlternation": [
+          "light",
+          "accent",
+          "light",
+          "light",
+          "accent",
+          "light"
+        ],
+        "animationStyle": "fade-in",
+        "spacingScale": "generous"
+      },
+      "compatibleComponents": {
+        "nav": [
+          {
+            "name": "StickyMinimal",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "CenteredLogo",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "NavScrollAware",
+            "variants": [
+              "default",
+              "minimal"
+            ]
+          }
+        ],
+        "hero": [
+          {
+            "name": "MinimalClean",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "SplitImage",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "AnimatedText",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "HeroOverlap",
+            "variants": [
+              "default",
+              "reversed",
+              "centered"
+            ]
+          },
+          {
+            "name": "HeroTextFocus",
+            "variants": [
+              "default",
+              "centered"
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "TabbedShowcase",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "CardGrid",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "ServicesBento",
+            "variants": [
+              "default",
+              "alt",
+              "compact"
+            ]
+          },
+          {
+            "name": "ServicesCompact",
+            "variants": [
+              "default",
+              "list"
+            ]
+          }
+        ],
+        "testimonials": [
+          {
+            "name": "GridCards",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "CarouselSlider",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "TestimonialsMarquee",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "TestimonialsFeatured",
+            "variants": [
+              "default",
+              "centered"
+            ]
+          }
+        ],
+        "cta": [
+          {
+            "name": "InlineSubtle",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "FloatingCard",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "CtaSplit",
+            "variants": [
+              "default",
+              "reversed"
+            ]
+          }
+        ],
+        "gallery": [
+          {
+            "name": "LightboxGrid",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "MasonryGrid",
+            "variants": [
+              "default"
+            ]
+          }
+        ],
+        "contact": [
+          {
+            "name": "SidebarForm",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "SplitFormMap",
+            "variants": [
+              "default"
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "name": "MinimalClean",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "CenteredStack",
+            "variants": [
+              "default"
+            ]
+          },
+          {
+            "name": "FooterColumns",
+            "variants": [
+              "default",
+              "compact"
+            ]
+          }
+        ],
+        "trust": [
+          {
+            "name": "TrustBar",
+            "variants": [
+              "stats",
+              "badges",
+              "minimal"
+            ]
+          },
+          {
+            "name": "TrustBanner",
+            "variants": [
+              "light"
+            ]
+          }
+        ]
+      }
+    },
+    "components": {
+      "nav": {
+        "name": "NavScrollAware",
+        "variant": "minimal"
+      },
+      "hero": {
+        "name": "MinimalClean",
+        "variant": "default"
+      },
+      "services": {
+        "name": "ServicesCompact",
+        "variant": "list"
+      },
+      "testimonials": {
+        "name": "TestimonialsMarquee",
+        "variant": "default"
+      },
+      "cta": {
+        "name": "FloatingCard",
+        "variant": "default"
+      },
+      "gallery": {
+        "name": "LightboxGrid",
+        "variant": "default"
+      },
+      "contact": {
+        "name": "SplitFormMap",
+        "variant": "default"
+      },
+      "footer": {
+        "name": "CenteredStack",
+        "variant": "default"
+      },
+      "trust": {
+        "name": "TrustBanner",
+        "variant": "light"
+      }
+    },
+    "activeEffects": [
+      "hover-lift",
+      "dotgrid-bg",
+      "hover-glow"
+    ],
+    "colorStrategy": "inverted",
+    "sectionOrder": [
+      "hero",
+      "trust",
+      "services",
+      "testimonials",
+      "cta",
+      "about",
+      "valueProps",
+      "gallery",
+      "contact"
+    ]
+  },
+  "content": {
+    "homepage": {
+      "heroHeadline": "Denver's Trusted Plumbing Experts",
+      "heroSubline": "Fast, reliable plumbing services for Denver homes. Serving Aurora to Highlands Ranch with same-day emergency repairs.",
+      "aboutTitle": "Your Local Plumbing Partner",
+      "aboutText": [
+        "Founded in 2012, Summit Plumbing Solutions has been keeping Denver homes flowing smoothly through harsh winters and rapid growth. What began as a two-person operation now serves thousands of satisfied customers across the metro area.",
+        "We believe plumbing should be straightforward - honest assessments, clear pricing, and work that lasts through Colorado's freeze-thaw cycles. Our technicians train continuously on the latest techniques for older Denver homes.",
+        "From sponsoring youth sports in Aurora to volunteering with Habitat for Humanity in Lakewood, we're committed to strengthening the communities we serve."
+      ],
+      "valueProps": [
+        {
+          "title": "24/7 Emergency Response",
+          "description": "When pipes burst at 2 AM during a Denver snowstorm, we're there - fully stocked trucks ready to handle any crisis."
+        },
+        {
+          "title": "Local Climate Specialists",
+          "description": "We know how Colorado's extreme temperature swings affect pipes differently than coastal climates."
+        },
+        {
+          "title": "Historic Home Experts",
+          "description": "From Capitol Hill Victorians to mid-century Arvada ranches, we understand Denver's diverse housing stock."
+        },
+        {
+          "title": "Upfront Pricing",
+          "description": "No surprises - we provide clear estimates before turning a wrench, with options for every budget."
+        }
+      ],
+      "ctaHeadline": "Need a plumber you can trust?",
+      "ctaSubline": "Call (303) 555-0142 for same-day service across the Denver metro."
+    },
+    "services": [
+      {
+        "slug": "emergency-plumbing",
+        "name": "Emergency Plumbing",
+        "shortDescription": "24/7 crisis response for burst pipes, overflowing toilets, and sudden leaks.",
+        "description": "When plumbing emergencies strike Denver homes - often during our notorious overnight freezes - you need immediate help. Our rapid response teams carry specialized equipment to handle everything from frozen pipe bursts in Park Hill basements to sewer backups in Wash Park bungalows.\n\nColorado's dramatic temperature swings put unique stress on plumbing systems. A 60° afternoon can plunge below freezing by midnight, causing pipes in older Capitol Hill homes to fail catastrophically. We keep heated service trucks stocked with pipe wrap, thawing equipment, and temporary patching materials to stabilize situations fast.\n\nEvery emergency call begins with a full system assessment - we don't just fix the symptom. For Victorian homes with original galvanized pipes, we'll identify weak points before the next cold snap hits. Modern Highlands Ranch homes get checked for improper winterization by builders.",
+        "process": [
+          "Step 1: Immediate phone consultation to assess safety risks",
+          "Step 2: Dispatch technician with appropriate equipment for your emergency",
+          "Step 3: On-site diagnosis and temporary stabilization if needed",
+          "Step 4: Permanent repair recommendations with transparent pricing"
+        ],
+        "benefits": [
+          "Average 45-minute response time across Denver metro",
+          "Technicians certified in water damage mitigation",
+          "Direct insurance billing available",
+          "Follow-up inspections included"
+        ],
+        "faq": [
+          {
+            "question": "Do you handle slab leaks in Denver's expansive soils?",
+            "answer": "Yes - we use electronic leak detection to pinpoint problems under concrete foundations without unnecessary demolition, common in Littleton's clay-heavy soil."
+          },
+          {
+            "question": "What's your winter surcharge policy?",
+            "answer": "Unlike some companies, we never add weather premiums - our flat-rate pricing applies year-round, even during blizzards."
+          },
+          {
+            "question": "Can you repair copper pipes damaged by hail?",
+            "answer": "Absolutely. After Colorado's frequent hail storms, we replace dented exterior pipes using matching materials to maintain historic home integrity."
+          }
+        ]
+      },
+      {
+        "slug": "water-heater-installation",
+        "name": "Water Heater Installation",
+        "shortDescription": "Right-sized tank and tankless systems for Denver's hard water conditions.",
+        "description": "Choosing a water heater for your Denver home isn't one-size-fits-all. Our specialists consider your household size, water usage patterns, and Colorado's mineral-rich water to recommend the perfect system.\n\nFor historic LoDo condos with limited space, we install compact tankless units that preserve square footage while delivering endless hot water. Families in Highlands Ranch often benefit from hybrid heat pump models that cut energy use by 60% - crucial with our rising utility rates.\n\nWe handle all aspects from permit pulling to final inspection, including:\n\n- Hard water treatment system integration\n- Earthquake strapping for seismic safety\n- Smart thermostat compatibility\n- Proper venting for high-altitude operation\n\nOur installers train specifically on Denver's unique challenges - like adjusting gas pressure for tankless units at 5,280 feet. Whether you need a simple 40-gallon replacement for your Arvada ranch or a whole-home recirculation system in a RiNo loft, we've got you covered.",
+        "process": [
+          "Step 1: Comprehensive home evaluation and usage assessment",
+          "Step 2: Energy efficiency and cost comparison of options",
+          "Step 3: Professional removal of old unit (including proper disposal)",
+          "Step 4: Precision installation with code-compliant upgrades"
+        ],
+        "benefits": [
+          "Altitude-adjusted performance tuning",
+          "10-year labor warranty on installations",
+          "Rebate paperwork assistance",
+          "Local code compliance guaranteed"
+        ],
+        "faq": [
+          {
+            "question": "How long do water heaters typically last in Denver?",
+            "answer": "With our hard water, traditional tanks last 8-12 years. We recommend annual flushing to extend lifespan - included free for our installation customers."
+          },
+          {
+            "question": "Can you install a solar water heater in Denver?",
+            "answer": "Yes! We're certified for solar thermal systems that take advantage of Colorado's 300+ sunny days per year, with backup integration for cloudy spells."
+          },
+          {
+            "question": "Do you service tankless warranties?",
+            "answer": "We're authorized dealers for all major brands, handling warranty claims directly so you don't have to."
+          }
+        ]
+      },
+      {
+        "slug": "drain-cleaning",
+        "name": "Drain Cleaning",
+        "shortDescription": "Advanced hydro-jetting and snaking for Denver's problematic drains.",
+        "description": "Denver's combination of older sewer systems and tree-root invasive soils creates constant drain challenges. Our specialized equipment clears blockages without damaging your pipes - whether it's a 1920s cast iron line under a Capitol Hill home or modern PVC in a Highlands Ranch subdivision.\n\nWe go beyond basic snaking with:\n\n- Camera inspections to identify root intrusion common near City Park's mature trees\n- Hydro-jetting that scours pipe walls clean\n- Enzymatic treatments that prevent future clogs\n- Trenchless spot repairs for damaged sections\n\nFor restaurants in LoDo dealing with grease buildup or homeowners in Park Hill battling cottonwood roots, we tailor solutions to your specific situation. Our technicians can even show you real-time video of your pipes to explain exactly what's happening underground.\n\nRegular maintenance is crucial in Colorado - we recommend annual cleanings for homes with mature landscaping to prevent sewer backups during spring thaw. Our membership program makes preventive care affordable.",
+        "process": [
+          "Step 1: Drain diagnosis with camera inspection when needed",
+          "Step 2: Selection of appropriate cleaning method",
+          "Step 3: Thorough clearing with debris removal",
+          "Step 4: Preventative treatment application"
+        ],
+        "benefits": [
+          "No-dig solutions preserve landscaping",
+          "Grease trap services for commercial clients",
+          "Environmentally friendly cleaning agents",
+          "Same-day service for urgent clogs"
+        ],
+        "faq": [
+          {
+            "question": "Why do my drains clog more in winter?",
+            "answer": "Cold temperatures cause grease to solidify in pipes, while dormant tree roots seek moisture from sewer lines - we see most blockages between November and March."
+          },
+          {
+            "question": "Can hydro-jetting damage old pipes?",
+            "answer": "Our technicians adjust pressure based on pipe material - we use lower PSI for vintage clay tiles common in Denver's historic districts."
+          },
+          {
+            "question": "Do you offer septic services?",
+            "answer": "While we focus on municipal sewer connections, we can refer trusted partners for mountain homes with septic systems."
+          }
+        ]
+      },
+      {
+        "slug": "pipe-repair",
+        "name": "Pipe Repair",
+        "shortDescription": "Trenchless solutions and precision fixes for Denver's aging pipes.",
+        "description": "From freeze-damaged supply lines in Lakewood to corroded galvanized pipes in Park Hill bungalows, we've mastered pipe repairs that stand up to Colorado's challenges. Our approach minimizes disruption to your home and landscaping while ensuring lasting results.\n\nFor common issues like:\n\n- Pinhole leaks in copper pipes (accelerated by Denver's acidic water)\n- Frozen burst sections in exterior walls\n- Corrosion at joints in older homes\n- Earthquake-induced stress fractures\n\nWe employ trenchless epoxy lining when possible - a technique that rehabilitates pipes without excavation. For complete replacements, we use materials suited to our environment, like CPVC that won't degrade in our dry climate.\n\nHistoric district projects receive special attention - we match existing pipe routes to preserve original layouts and use period-appropriate materials when required by preservation guidelines. Modern homes get upgrades with accessible shutoff valves and earthquake-resistant fittings.",
+        "process": [
+          "Step 1: Pressure testing and leak detection",
+          "Step 2: Non-invasive diagnosis with pipe cameras",
+          "Step 3: Repair method selection with homeowner consultation",
+          "Step 4: Precision implementation with minimal disruption"
+        ],
+        "benefits": [
+          "75% of repairs completed without excavation",
+          "Freeze-resistant insulation options",
+          "Historic preservation compliance",
+          "10-year warranty on materials"
+        ],
+        "faq": [
+          {
+            "question": "Why do copper pipes fail faster in Denver?",
+            "answer": "Our low humidity and high altitude accelerate oxidation, while acidic water eats through protective coatings. We install dielectric unions to prevent galvanic corrosion."
+          },
+          {
+            "question": "Can you repair pipes under concrete slabs?",
+            "answer": "Yes - we use directional drilling to access pipes without destroying your foundation or flooring, common in Littleton's ranch homes."
+          },
+          {
+            "question": "Do you handle main water line replacements?",
+            "answer": "Absolutely - from permit acquisition to final inspection, we manage complete service line renewals with minimal yard disturbance."
+          }
+        ]
+      },
+      {
+        "slug": "sewer-line-replacement",
+        "name": "Sewer Line Replacement",
+        "shortDescription": "Modern trenchless techniques for failing sewer lines across Denver.",
+        "description": "Denver's aging sewer infrastructure combined with expansive soils creates constant challenges for homeowners. When tree roots invade your line or shifting ground causes collapses, our trenchless replacement methods save your landscaping while restoring proper flow.\n\nWe specialize in:\n\n- Pipe bursting (pulling new HDPE pipe through old lines)\n- Cured-in-place pipe lining (creating a new pipe within the old)\n- Directional drilling for completely new routes\n\nEach method preserves mature trees and hardscaping - crucial in neighborhoods like Wash Park where century-old elms shade the streets. Our team handles all permits and coordinates with the city for tap reconnections.\n\nFor homes built before 1970, we often discover original clay or cast iron pipes completely compromised by decades of ground movement. Modern PVC replacements we install resist root intrusion and last 50+ years. We even include cleanout installations for easier future maintenance.",
+        "process": [
+          "Step 1: Camera inspection to confirm replacement need",
+          "Step 2: Soil assessment and utility locating",
+          "Step 3: Trenchless method selection",
+          "Step 4: Installation with post-work camera verification"
+        ],
+        "benefits": [
+          "90% of jobs completed without trenches",
+          "Root-resistant pipe materials",
+          "Cleanout installations included",
+          "5-year workmanship warranty"
+        ],
+        "faq": [
+          {
+            "question": "How do I know if my sewer line needs replacement?",
+            "answer": "Frequent backups, soggy spots in your yard, or sewage smells indicate problems. We offer free camera inspections to assess line condition."
+          },
+          {
+            "question": "Can you work around mature trees?",
+            "answer": "Absolutely - our trenchless methods preserve root systems, unlike traditional excavation that can damage tree health."
+          },
+          {
+            "question": "Does Denver require permits for sewer work?",
+            "answer": "Yes, and we handle all paperwork - including coordination with the city for tap inspections when work is complete."
+          }
+        ]
+      },
+      {
+        "slug": "bathroom-repiping",
+        "name": "Bathroom Repiping",
+        "shortDescription": "Complete water line overhauls for Denver bathroom remodels and leaks.",
+        "description": "Whether you're renovating a Victorian bathroom in Capitol Hill or addressing chronic leaks in a 1960s Lakewood split-level, our bathroom repiping services restore reliable water delivery. We replace outdated galvanized and polybutylene pipes with durable PEX systems that withstand Colorado's temperature extremes.\n\nOur process considers:\n\n- Preservation of historic tilework in Denver's character homes\n- Water pressure balancing for multi-fixture installations\n- Freeze protection for pipes in exterior walls\n- Accessibility for future maintenance\n\nWe coordinate closely with your remodel team if applicable, sequencing work to minimize downtime. For emergency repiping after sudden failures, we offer temporary water solutions to keep your household functioning during the project.\n\nDenver's hard water means we install whole-house filters when repiping bathrooms - protecting your new investment from mineral buildup. We also upgrade shutoff valves to quarter-turn models that won't seize up from calcium deposits like old multi-turn valves often do.",
+        "process": [
+          "Step 1: Comprehensive assessment of existing plumbing",
+          "Step 2: Material selection and routing plan",
+          "Step 3: Careful demolition (when needed)",
+          "Step 4: Precision installation with pressure testing"
+        ],
+        "benefits": [
+          "Freeze-resistant pipe routing",
+          "Water pressure optimization",
+          "Hard water protection systems",
+          "Remodeler coordination services"
+        ],
+        "faq": [
+          {
+            "question": "How disruptive is bathroom repiping?",
+            "answer": "We plan access points strategically - most projects require only small openings that we patch professionally when complete."
+          },
+          {
+            "question": "Can you match original pipe routes in historic homes?",
+            "answer": "Yes, we document existing layouts before making changes and can replicate original pipe paths when preservation guidelines require."
+          },
+          {
+            "question": "Do you handle radiant floor heating systems?",
+            "answer": "Absolutely - we're experienced with both hydronic and electric systems common in Denver bathroom remodels."
+          }
+        ]
+      }
+    ],
+    "serviceAreas": [
+      {
+        "city": "Denver",
+        "slug": "denver",
+        "state": "CO",
+        "content": "As Denver's original plumbing provider since 2012, we know the unique challenges of maintaining pipes in neighborhoods from LoDo's converted warehouses to Park Hill's historic bungalows. The city's rapid freeze-thaw cycles test plumbing systems like few other climates - we've specialized in preventing and repairing freeze damage across all housing types.\n\nOur teams navigate Denver's complex permitting process so you don't have to, whether replacing sewer lines under historic district sidewalks or upgrading water mains in RiNo's new developments. We stock specialized parts for Victorian-era plumbing still found in Capitol Hill, while staying current on the latest PEX systems for downtown high-rises.",
+        "localContext": "Denver's mix of historic and modern construction requires plumbing expertise across centuries of building techniques.",
+        "nearbyAreas": [
+          "Englewood",
+          "Wheat Ridge",
+          "Sheridan"
+        ]
+      },
+      {
+        "city": "Aurora",
+        "slug": "aurora",
+        "state": "CO",
+        "content": "Serving Aurora's sprawling suburban neighborhoods means understanding how 1970s-80s construction techniques impact plumbing reliability. We frequently encounter polybutylene piping in these homes - a material prone to failure that we replace with modern alternatives.\n\nOur Aurora team knows how to navigate the city's unique water pressure zones, adjusting solutions for homes near the reservoir versus those in lower elevation areas. We're familiar with common issues in developments like Saddle Rock and Tallyn's Reach, from hard water scale buildup to tree root intrusion in sewer lines.",
+        "localContext": "Aurora's vast suburban landscape features homes with plumbing systems showing their age after 40+ years of service.",
+        "nearbyAreas": [
+          "Centennial",
+          "Foxfield",
+          "Greenwood Village"
+        ]
+      },
+      {
+        "city": "Lakewood",
+        "slug": "lakewood",
+        "state": "CO",
+        "content": "Lakewood's proliferation of 1960s-70s split-level homes presents distinct plumbing challenges we're uniquely equipped to handle. These properties often have original galvanized pipes hidden in hard-to-access crawlspaces - we've developed specialized techniques to replace them without major demolition.\n\nFrom Belmar to Green Mountain, we address Lakewood's common issues: failing water heaters in unheated garages, frozen exterior faucets, and main line clogs from mature landscaping. Our technicians train specifically on the copper-solder joint failures prevalent in these mid-century builds.",
+        "localContext": "Lakewood's mid-century housing stock requires plumbing solutions tailored to its era-specific construction methods.",
+        "nearbyAreas": [
+          "Golden",
+          "Morrison",
+          "Wheat Ridge"
+        ]
+      },
+      {
+        "city": "Arvada",
+        "slug": "arvada",
+        "state": "CO",
+        "content": "Arvada's ranch-style homes demand plumbing expertise that respects their original layouts while updating critical systems. We carefully replace aging pipes in these single-level dwellings with minimal disruption to finished basements or landscaping.\n\nWhether working in Olde Town's historic district or newer developments like Candelas, we understand Arvada's water quality challenges. Our whole-house filter installations combat the sediment common in Arvada's water supply, protecting fixtures and appliances from premature wear.",
+        "localContext": "Arvada's predominance of ranch homes requires plumbing approaches suited to their accessible but aging systems.",
+        "nearbyAreas": [
+          "Westminster",
+          "Broomfield",
+          "Superior"
+        ]
+      },
+      {
+        "city": "Littleton",
+        "slug": "littleton",
+        "state": "CO",
+        "content": "Littleton's mix of historic downtown bungalows and newer suburban developments requires versatile plumbing expertise. We're equally comfortable preserving original fixtures in century-old homes along Main Street as we are installing modern tankless systems in Roxborough Park estates.\n\nThe area's clay-heavy soil presents unique challenges for sewer lines - we use specialized camera equipment to diagnose root intrusion from mature trees shading Littleton's charming streets. Our water treatment solutions address the particular mineral content common in South Platte-sourced water.",
+        "localContext": "Littleton's combination of historic charm and modern luxury demands plumbing solutions for every era.",
+        "nearbyAreas": [
+          "Highlands Ranch",
+          "Englewood",
+          "Ken Caryl"
+        ]
+      },
+      {
+        "city": "Highlands Ranch",
+        "slug": "highlands-ranch",
+        "state": "CO",
+        "content": "Highlands Ranch's planned community homes from the 1990s-2000s benefit from our expertise with modern plumbing materials and layouts. We understand the builder-grade components originally installed in these properties and how to upgrade them for Colorado's demands.\n\nFrom Eastridge to Backcountry, we address common issues like undersized water heaters in large homes and improperly winterized exterior plumbing. Our recirculating pump installations solve the long wait times for hot water in these spacious residences. We're also experienced with HOA requirements for exterior work in Highlands Ranch's meticulously maintained neighborhoods.",
+        "localContext": "Highlands Ranch's relatively new construction still requires plumbing expertise tailored to its planned community design.",
+        "nearbyAreas": [
+          "Lone Tree",
+          "Parker",
+          "Castle Pines"
+        ]
+      },
+      {
+        "city": "Englewood",
+        "slug": "englewood",
+        "state": "CO",
+        "content": "Englewood's diverse housing stock - from postwar bungalows to modern infill - requires adaptable plumbing solutions. We're familiar with the city's mix of original plumbing in older southside neighborhoods and cutting-edge systems in the new CityCenter development.\n\nOur team frequently handles lead service line replacements in Englewood's pre-1950s housing, coordinating with the city's replacement program. We also specialize in solving water pressure inconsistencies between lower and higher elevation areas of this geographically varied community.",
+        "localContext": "Englewood's transition from historic residential to modern mixed-use demands plumbing versatility.",
+        "nearbyAreas": [
+          "Littleton",
+          "Sheridan",
+          "Cherry Hills Village"
+        ]
+      },
+      {
+        "city": "Centennial",
+        "slug": "centennial",
+        "state": "CO",
+        "content": "Centennial's mix of established neighborhoods and new construction benefits from our dual expertise in legacy systems and modern innovations. We understand how to update plumbing in original Homestead Ranch homes while integrating smart home water monitoring in newer properties.\n\nThe area's proximity to Cherry Creek Reservoir means we're experienced with well-to-city-water conversions as properties transition. Our water treatment solutions address the particular hardness levels common in Centennial's supply, protecting appliances and fixtures throughout the home.",
+        "localContext": "Centennial's growth from rural to suburban creates unique plumbing transition challenges we're equipped to handle.",
+        "nearbyAreas": [
+          "Parker",
+          "Lone Tree",
+          "Greenwood Village"
+        ]
+      },
+      {
+        "city": "Westminster",
+        "slug": "westminster",
+        "state": "CO",
+        "content": "Westminster's evolution from farmland to thriving suburb means we encounter every era of plumbing technology in our work here. From original farmhouse systems in historic areas to modern high-efficiency installations in Rock Creek, we've got the expertise to handle it all.\n\nWe're particularly experienced with Westminster's expansive soil conditions that stress pipes and foundations. Our trenchless repair methods minimize disruption to the city's characteristic open spaces while providing lasting solutions. For newer developments like The Promenade, we install water-efficient systems that meet Westminster's conservation goals.",
+        "localContext": "Westminster's rapid development requires plumbing solutions that bridge rural legacy systems and modern suburban demands.",
+        "nearbyAreas": [
+          "Arvada",
+          "Broomfield",
+          "Thornton"
+        ]
+      },
+      {
+        "city": "Broomfield",
+        "slug": "broomfield",
+        "state": "CO",
+        "content": "Broomfield's unique position between Denver and Boulder means we understand the distinct plumbing needs of this growing community. From original mid-century plumbing in the Broadlands to state-of-the-art systems in new Anthem developments, we're equipped for all scenarios.\n\nWe frequently handle conversions from septic to city sewer as Broomfield expands its infrastructure. Our teams are also experienced with the water pressure variations between older and newer parts of town, ensuring consistent performance throughout your home.",
+        "localContext": "Broomfield's transition from rural to urban creates plumbing challenges requiring both traditional and innovative solutions.",
+        "nearbyAreas": [
+          "Westminster",
+          "Louisville",
+          "Superior"
+        ]
+      }
+    ],
+    "reviews": [
+      {
+        "name": "Sarah K.",
+        "rating": 5,
+        "service": "Emergency Plumbing",
+        "text": "When our Park Hill bungalow's pipes froze during the January polar vortex, Summit had a technician here in 35 minutes. He thawed the lines safely and identified several other vulnerable spots we've since addressed. Couldn't be more grateful!",
+        "date": "2025-01-15"
+      },
+      {
+        "name": "James T.",
+        "rating": 5,
+        "service": "Water Heater Installation",
+        "text": "The team installed a high-efficiency tankless unit in our Highlands Ranch home perfectly. They adjusted the gas pressure for altitude and installed a water softener to protect the system - all at a better price than the big box stores quoted.",
+        "date": "2025-03-22"
+      },
+      {
+        "name": "Ming L.",
+        "rating": 5,
+        "service": "Drain Cleaning",
+        "text": "After three other companies failed to fully clear our RiNo loft's stubborn kitchen drain, Summit's hydro-jetting did the trick. The technician showed me the camera footage of the grease buildup and explained how to prevent future issues.",
+        "date": "2025-02-10"
+      },
+      {
+        "name": "Elena R.",
+        "rating": 5,
+        "service": "Pipe Repair",
+        "text": "They repaired multiple pinhole leaks in our Arvada ranch's copper pipes without tearing up walls. The epoxy lining solution has held perfectly through two freeze cycles so far. Professional from estimate to cleanup.",
+        "date": "2025-04-05"
+      },
+      {
+        "name": "David P.",
+        "rating": 5,
+        "service": "Sewer Line Replacement",
+        "text": "Summit replaced our collapsed sewer line under the driveway in Wash Park using trenchless methods - saved our mature elm tree and beautiful paver driveway. The crew was meticulous and left the site spotless.",
+        "date": "2025-01-30"
+      },
+      {
+        "name": "Natalie B.",
+        "rating": 5,
+        "service": "Bathroom Repiping",
+        "text": "During our Capitol Hill bathroom remodel, they expertly replaced the galvanized pipes while preserving the original tilework we wanted to keep. The new PEX system provides much better pressure than our 1920s plumbing ever did.",
+        "date": "2025-03-18"
+      },
+      {
+        "name": "Carlos M.",
+        "rating": 5,
+        "service": "Water Heater Installation",
+        "text": "Honest assessment of our options for a Lakewood split-level. They recommended a hybrid heat pump model that's cut our energy bills significantly, and the installation was completed in one day despite tricky access.",
+        "date": "2025-02-28"
+      },
+      {
+        "name": "Priya S.",
+        "rating": 5,
+        "service": "Emergency Plumbing",
+        "text": "2 AM basement flood in Aurora during a snowstorm - Summit's emergency team arrived faster than promised, stopped the leak, and helped coordinate water damage mitigation. Their compassion during a stressful situation meant everything.",
+        "date": "2025-01-05"
+      }
+    ],
+    "seo": {
+      "homepage": {
+        "title": "Denver Plumbing Services | Summit Plumbing Solutions",
+        "description": "Trusted local plumbers serving Denver, Aurora, Lakewood with emergency repairs, water heater installs, and sewer line replacements since 2012."
+      },
+      "about": {
+        "title": "About Summit Plumbing - Denver's Local Experts",
+        "description": "Learn why Denver homeowners trust Summit Plumbing Solutions for reliable, climate-appropriate plumbing services across the metro area."
+      },
+      "services": {
+        "title": "Denver Plumbing Services | Complete Solutions",
+        "description": "From emergency pipe repairs to bathroom repiping, Summit Plumbing offers comprehensive plumbing services tailored to Colorado homes."
+      },
+      "contact": {
+        "title": "Contact Denver's Plumbing Pros | Summit",
+        "description": "Schedule service or get plumbing advice from Summit's Denver-based team. Serving Aurora to Highlands Ranch with 24/7 availability."
+      },
+      "reviews": {
+        "title": "Denver Plumbing Reviews | Summit Solutions",
+        "description": "Read authentic reviews from satisfied customers across Denver, Aurora, Lakewood and other communities we serve."
+      },
+      "service-areas": {
+        "title": "Denver Metro Plumbing Service Areas",
+        "description": "Summit Plumbing serves Denver, Aurora, Lakewood, Arvada, Littleton, Highlands Ranch and surrounding communities with local plumbing expertise."
+      }
+    },
+    "companyInfo": {
+      "yearsInBusiness": 12,
+      "projectsCompleted": "800+",
+      "satisfaction": "97%",
+      "teamSize": "20+"
+    }
+  },
+  "images": {
+    "hero": "/images/hero.webp",
+    "about": "/images/about.webp",
+    "services": {
+      "emergency-plumbing": "/images/service-emergency-plumbing.webp",
+      "water-heater-installation": "/images/service-water-heater-installation.webp",
+      "drain-cleaning": "/images/service-drain-cleaning.webp",
+      "pipe-repair": "/images/service-pipe-repair.webp",
+      "sewer-line-replacement": "/images/service-sewer-line-replacement.webp",
+      "bathroom-repiping": "/images/service-bathroom-repiping.webp"
+    },
+    "gallery": [
+      "/images/gallery-0.webp",
+      "/images/gallery-1.webp"
+    ]
+  }
+}

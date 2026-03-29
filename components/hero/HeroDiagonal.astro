@@ -1,0 +1,291 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const { heroHeadline, heroSubline } = siteConfig.content.homepage;
+const biz = siteConfig.business;
+const heroImage = siteConfig.images.hero;
+const info = siteConfig.content.companyInfo;
+const variant = getVariant("hero");
+---
+
+<section class="hero-diagonal" data-variant={variant} aria-label="Hero">
+  {/* Image side with diagonal clip */}
+  <div class="hd__image-side">
+    {heroImage && (
+      <img src={heroImage} alt={`${biz.category} services in ${biz.city}, ${biz.state}`} class="hd__image" loading="eager" />
+    )}
+    <div class="hd__image-overlay" aria-hidden="true"></div>
+  </div>
+
+  {/* Content side */}
+  <div class="hd__content-side">
+    <div class="hd__inner">
+      {/* Floating badge */}
+      <div class="hd__floating-badge animate-fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>{biz.category} &bull; {biz.city}, {biz.state}</span>
+      </div>
+
+      <h1 class="hd__headline animate-fade-up">{heroHeadline}</h1>
+      <p class="hd__subline animate-fade-up">{heroSubline}</p>
+
+      <div class="hd__actions animate-fade-up">
+        <a href="/contact" class="btn-primary hd__cta">
+          Get Free Estimate
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href={`tel:${biz.phone.replace(/[^+\d]/g, "")}`} class="btn-secondary hd__call">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          {biz.phone}
+        </a>
+      </div>
+
+      <div class="hd__stats animate-fade-up">
+        <div class="hd__stat">
+          <span class="hd__stat-value">{info.yearsInBusiness}+</span>
+          <span class="hd__stat-label">Years Experience</span>
+        </div>
+        <div class="hd__stat-divider"></div>
+        <div class="hd__stat">
+          <span class="hd__stat-value">{info.projectsCompleted}</span>
+          <span class="hd__stat-label">Projects Done</span>
+        </div>
+        <div class="hd__stat-divider"></div>
+        <div class="hd__stat">
+          <span class="hd__stat-value">{info.satisfaction}</span>
+          <span class="hd__stat-label">Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-diagonal {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    background: var(--color-background);
+  }
+
+  /* Image side — diagonal clip */
+  .hd__image-side {
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+  }
+
+  .hd__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hd__image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.1) 50%,
+      color-mix(in srgb, var(--color-primary) 20%, transparent) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Content side */
+  .hd__content-side {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hd__inner {
+    max-width: 520px;
+    padding: 4rem 0 4rem 2rem;
+  }
+
+  /* Floating badge */
+  .hd__floating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hd__floating-badge svg {
+    flex-shrink: 0;
+  }
+
+  .hd__headline {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    color: var(--color-text);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+  }
+
+  .hd__subline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+    max-width: 460px;
+  }
+
+  .hd__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hd__cta {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hd__call {
+    padding: 0.95rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Stats row */
+  .hd__stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hd__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .hd__stat-value {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1.5rem;
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .hd__stat-label {
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .hd__stat-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--color-border);
+  }
+
+  /* Reversed variant — opposite diagonal */
+  .hero-diagonal[data-variant="reversed"] {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-diagonal[data-variant="reversed"] .hd__image-side {
+    order: 2;
+    clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .hero-diagonal[data-variant="reversed"] .hd__content-side {
+    order: 1;
+    justify-content: flex-end;
+  }
+
+  .hero-diagonal[data-variant="reversed"] .hd__inner {
+    padding: 4rem 2rem 4rem 0;
+    margin-left: auto;
+  }
+
+  .hero-diagonal[data-variant="reversed"] .hd__image-overlay {
+    background: linear-gradient(
+      225deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.1) 50%,
+      color-mix(in srgb, var(--color-primary) 20%, transparent) 100%
+    );
+  }
+
+  /* Responsive */
+  @media (max-width: 1023px) {
+    .hero-diagonal {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hd__image-side {
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%) !important;
+      height: 50vh;
+      min-height: 320px;
+    }
+
+    .hd__content-side {
+      padding: 0 1.5rem;
+      order: 2 !important;
+    }
+
+    .hd__image-side {
+      order: 1 !important;
+    }
+
+    .hd__inner {
+      padding: 2rem 0 3rem !important;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hd__image-side {
+      height: 40vh;
+      min-height: 260px;
+    }
+
+    .hd__actions {
+      flex-direction: column;
+    }
+
+    .hd__cta,
+    .hd__call {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hd__stats {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .hd__stat-divider {
+      display: none;
+    }
+  }
+</style>

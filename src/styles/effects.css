@@ -1,0 +1,31 @@
+/* Active effects for this build */
+
+/* Hover lift with enhanced shadow */
+.effect-hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.effect-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 25px rgba(0,0,0, calc(0.08 * var(--shadow-intensity))),
+    0 4px 10px rgba(0,0,0, calc(0.05 * var(--shadow-intensity)));
+}
+
+/* Dot grid background pattern */
+.effect-dotgrid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-border) 40%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Hover glow with brand color */
+.effect-hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.effect-hover-glow:hover {
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent),
+    0 0 40px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}

@@ -1,0 +1,268 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const services = siteConfig.content.services;
+const biz = siteConfig.business;
+const variant = getVariant("services");
+const gradientBorder = hasEffect("gradient-border");
+---
+
+<section class="compact-services section-padding" aria-labelledby="compact-services-heading" data-variant={variant}>
+  <div class="compact-services__container">
+    <div class="compact-services__header animate-fade-up">
+      <h2 id="compact-services-heading" class="compact-services__title">What We Do</h2>
+      <p class="compact-services__subtitle">
+        Professional services from {biz.name} — quality you can count on.
+      </p>
+    </div>
+
+    <div class="compact-services__items animate-stagger">
+      {services.map((service, i) => (
+        <a
+          href={`/services/${service.slug}`}
+          class:list={[
+            "compact-services__item",
+            "animate-fade-up",
+            { "effect-gradient-border": gradientBorder },
+          ]}
+          style={`--stagger-index: ${i}`}
+          aria-label={`Learn more about ${service.name}`}
+        >
+          <div class="compact-services__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+          </div>
+          <div class="compact-services__text">
+            <h3 class="compact-services__name">{service.name}</h3>
+            <p class="compact-services__desc">{service.shortDescription}</p>
+          </div>
+          <span class="compact-services__arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .compact-services {
+    background: var(--color-background);
+  }
+
+  .compact-services__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .compact-services__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .compact-services__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0 0 0.75rem;
+    line-height: 1.15;
+  }
+
+  .compact-services__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: inherit;
+    opacity: 0.7;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ---- Default variant: 4-column grid of cards ---- */
+  [data-variant="default"] .compact-services__items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    [data-variant="default"] .compact-services__items {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    [data-variant="default"] .compact-services__items {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  [data-variant="default"] .compact-services__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 2rem 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  [data-variant="default"] .compact-services__item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-primary-light);
+  }
+
+  [data-variant="default"] .compact-services__item:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  [data-variant="default"] .compact-services__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  [data-variant="default"] .compact-services__text {
+    flex: 1;
+  }
+
+  [data-variant="default"] .compact-services__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: inherit;
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+
+  [data-variant="default"] .compact-services__desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: inherit;
+    opacity: 0.65;
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  [data-variant="default"] .compact-services__arrow {
+    display: none;
+  }
+
+  /* ---- List variant: single-column rows ---- */
+  [data-variant="list"] .compact-services__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  [data-variant="list"] .compact-services__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border-radius: 0;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+  }
+
+  [data-variant="list"] .compact-services__item:hover {
+    background-color: var(--color-background-alt);
+    padding-left: 1.5rem;
+  }
+
+  [data-variant="list"] .compact-services__item:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: -3px;
+  }
+
+  [data-variant="list"] .compact-services__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    flex-shrink: 0;
+  }
+
+  [data-variant="list"] .compact-services__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  [data-variant="list"] .compact-services__name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: inherit;
+    margin: 0 0 0.2rem;
+    line-height: 1.3;
+  }
+
+  [data-variant="list"] .compact-services__desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: inherit;
+    opacity: 0.6;
+    line-height: 1.5;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  [data-variant="list"] .compact-services__arrow {
+    display: flex;
+    align-items: center;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  [data-variant="list"] .compact-services__item:hover .compact-services__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 639px) {
+    [data-variant="list"] .compact-services__desc {
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+</style>

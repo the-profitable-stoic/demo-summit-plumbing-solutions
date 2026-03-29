@@ -1,0 +1,364 @@
+---
+import { siteConfig, getVariant, hasEffect } from "../../lib/site-config";
+
+const services = siteConfig.content.services;
+const serviceImages = siteConfig.images.services;
+const biz = siteConfig.business;
+const variant = getVariant("services");
+
+const featured = services[0];
+const rest = services.slice(1);
+---
+
+<section class="showcase-services section-padding" aria-labelledby="showcase-services-heading" data-variant={variant}>
+  <div class="showcase-services__container">
+    <div class="showcase-services__header animate-fade-up">
+      <p class="showcase-services__label">What We Offer</p>
+      <h2 id="showcase-services-heading" class="showcase-services__title">Our Services</h2>
+    </div>
+
+    {/* Featured Service */}
+    <div class="showcase-services__featured animate-fade-up">
+      {serviceImages[featured.slug] && (
+        <div class="showcase-services__featured-img-wrap">
+          <img
+            src={serviceImages[featured.slug]}
+            alt={featured.name}
+            class="showcase-services__featured-img"
+            loading="eager"
+            width="800"
+            height="500"
+          />
+        </div>
+      )}
+
+      <div class="showcase-services__featured-body">
+        <h3 class="showcase-services__featured-name">{featured.name}</h3>
+        <p class="showcase-services__featured-desc">{featured.description}</p>
+
+        {featured.process && featured.process.length > 0 && (
+          <div class="showcase-services__process">
+            <h4 class="showcase-services__process-title">Our Process</h4>
+            <ol class="showcase-services__process-list" role="list">
+              {featured.process.map((step, i) => (
+                <li class="showcase-services__process-step">
+                  <span class="showcase-services__step-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="showcase-services__step-text">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        <a href={`/services/${featured.slug}`} class="btn-primary showcase-services__cta">
+          View Full Details
+        </a>
+      </div>
+    </div>
+
+    {/* Remaining services — horizontal scroll row */}
+    {rest.length > 0 && (
+      <div class="showcase-services__rest animate-fade-up">
+        <h3 class="showcase-services__rest-title">More Services</h3>
+        <div class="showcase-services__scroll-row">
+          {rest.map((service, i) => (
+            <a
+              href={`/services/${service.slug}`}
+              class="showcase-services__mini-card animate-stagger"
+              style={`--stagger-index: ${i}`}
+              aria-label={`Learn more about ${service.name}`}
+            >
+              {serviceImages[service.slug] && (
+                <div class="showcase-services__mini-img-wrap">
+                  <img
+                    src={serviceImages[service.slug]}
+                    alt={service.name}
+                    class="showcase-services__mini-img"
+                    loading="lazy"
+                    width="280"
+                    height="180"
+                  />
+                </div>
+              )}
+              <div class="showcase-services__mini-body">
+                <h4 class="showcase-services__mini-name">{service.name}</h4>
+                <p class="showcase-services__mini-desc">{service.shortDescription}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .showcase-services {
+    background: var(--color-background);
+  }
+
+  .showcase-services__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .showcase-services__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .showcase-services__label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  .showcase-services__title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: inherit;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  /* ---- Featured ---- */
+  .showcase-services__featured {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+
+  /* Default: stacked (image top, body below) */
+  [data-variant="default"] .showcase-services__featured {
+    flex-direction: column;
+  }
+
+  /* Split: side-by-side */
+  @media (min-width: 768px) {
+    [data-variant="split"] .showcase-services__featured {
+      flex-direction: row;
+    }
+
+    [data-variant="split"] .showcase-services__featured-img-wrap {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  .showcase-services__featured-img-wrap {
+    overflow: hidden;
+  }
+
+  [data-variant="default"] .showcase-services__featured-img-wrap {
+    aspect-ratio: 16 / 8;
+  }
+
+  [data-variant="split"] .showcase-services__featured-img-wrap {
+    min-height: 320px;
+  }
+
+  .showcase-services__featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .showcase-services__featured-body {
+    padding: 2rem 2rem 2.5rem;
+    flex: 1;
+  }
+
+  .showcase-services__featured-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+    color: inherit;
+    margin: 0 0 1rem;
+    line-height: 1.25;
+  }
+
+  .showcase-services__featured-desc {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: inherit;
+    opacity: 0.75;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+  }
+
+  /* ---- Process Steps ---- */
+  .showcase-services__process {
+    margin-bottom: 1.75rem;
+  }
+
+  .showcase-services__process-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .showcase-services__process-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .showcase-services__process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.925rem;
+    line-height: 1.55;
+    color: inherit;
+  }
+
+  .showcase-services__step-num {
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    padding-top: 0.1em;
+  }
+
+  .showcase-services__step-text {
+    opacity: 0.8;
+  }
+
+  .showcase-services__cta {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  /* ---- Remaining services scroll row ---- */
+  .showcase-services__rest {
+    margin-top: 1rem;
+  }
+
+  .showcase-services__rest-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: inherit;
+    margin: 0 0 1.25rem;
+  }
+
+  .showcase-services__scroll-row {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .showcase-services__scroll-row::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .showcase-services__scroll-row::-webkit-scrollbar-track {
+    background: var(--color-background-alt);
+    border-radius: 3px;
+  }
+
+  .showcase-services__scroll-row::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+
+  .showcase-services__mini-card {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .showcase-services__mini-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .showcase-services__mini-card:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .showcase-services__mini-img-wrap {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .showcase-services__mini-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+
+  .showcase-services__mini-card:hover .showcase-services__mini-img {
+    transform: scale(1.05);
+  }
+
+  .showcase-services__mini-body {
+    padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .showcase-services__mini-name {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 1rem;
+    color: inherit;
+    margin: 0 0 0.35rem;
+    line-height: 1.3;
+  }
+
+  .showcase-services__mini-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: inherit;
+    opacity: 0.7;
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 639px) {
+    .showcase-services__featured-body {
+      padding: 1.5rem;
+    }
+
+    .showcase-services__mini-card {
+      flex: 0 0 220px;
+    }
+  }
+</style>
